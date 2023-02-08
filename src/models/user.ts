@@ -1,4 +1,3 @@
-import sequelize from "sequelize";
 import { Sequelize, Model, DataTypes } from "sequelize";
 
 class User extends Model {
@@ -17,9 +16,12 @@ class User extends Model {
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
 
-    public static associate(models: any) {
-        // Associations to be defined here
-    }
+    // public static associate(models: any) {
+    //     // Associations to be defined here
+    //     User.belongsToMany(models.Seller, {
+    //       through: 'SellerAssignment'
+    //     })
+    // }
 }
 
 export default (sequelize: Sequelize) => {
@@ -27,6 +29,7 @@ export default (sequelize: Sequelize) => {
       id: {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
+        allowNull: false,
         primaryKey: true,
       },
       first_name: {
@@ -60,11 +63,11 @@ export default (sequelize: Sequelize) => {
       },
       postal_code: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       image_key: {
         type: DataTypes.STRING(255),
-        allowNull: false,
+        allowNull: true,
       },
     }, {
       sequelize,
