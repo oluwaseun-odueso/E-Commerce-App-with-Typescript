@@ -48,6 +48,5 @@ User.init({
 }, {
     // Other model options go here
     sequelize: database_1.default,
-    modelName: 'User' // We need to choose the model name
+    modelName: 'User'
 });
-// console.log(User === sequelize.models.User);

@@ -8,7 +8,6 @@ require('dotenv').config();
 const secretKey = process.env.PAYLOAD_SECRET;
 if (!secretKey) {
     throw new Error('Missing required environment variable for User Authentication');
-    // process.exit(1)
 }
 ;
 function generateToken(payload) {

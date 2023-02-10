@@ -7,7 +7,6 @@ const password = process.env.SQ_PASSWORD;
 
 if (!database || !user || !password) {
   throw new Error('Missing required environment variables for database connection');
-  // process.exit(1);
 };
 
 const sequelize = new Sequelize(database, user, password, {

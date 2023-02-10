@@ -1,6 +1,5 @@
 import {User} from '../models/user';
 import bcrypt from 'bcrypt';
-import sequelize from '../connection/database';
 
 export type UserType = {
     first_name: string, 
@@ -19,17 +18,17 @@ async function createUser(userDetails: UserType) {
         const user = await User.create(userDetails)
         return user
     } catch (error) {
-        return error
+        throw new Error(`Error creating user: ${error}`)
+        // return error
     }
 }
 
-createUser({
-    first_name: "Oluwaseun",
-    last_name: "Odueso",
-    email: "seunoduez@gmail.com", 
-    phone_number: "09066318539",
-    password: "Timpel",
-    address: "27, Dayo Shittu Street",
-    state: "Ogun state"
-})
-    .then(i => console.log(i));
+async function hashUserPassword (password: string): Promise<string> {
+    try {
+        const saltRounds: number = 10;
+        const hash = await bcrypt.hash(password, saltRounds);
+        return hash
+    } catch (error) {
+        throw new Error('Error generating password hash');
+    }
+}
