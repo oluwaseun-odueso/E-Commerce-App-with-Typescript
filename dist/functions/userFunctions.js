@@ -18,4 +18,5 @@ createUser({
     password: "Timpel",
     address: "27, Dayo Shittu Street",
     state: "Ogun state"
-});
+})
+    .then(i => console.log(i));

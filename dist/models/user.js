@@ -41,11 +41,9 @@ User.init({
     },
     postal_code: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false
     },
     image_key: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false
     }
 }, {
     // Other model options go here

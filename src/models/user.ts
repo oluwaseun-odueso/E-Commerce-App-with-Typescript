@@ -35,11 +35,9 @@ state: {
 },
 postal_code : {
   type: DataTypes.INTEGER,
-  allowNull: false
 },
 image_key: {
   type: DataTypes.STRING,
-  allowNull: false
 }
 }, {
   // Other model options go here

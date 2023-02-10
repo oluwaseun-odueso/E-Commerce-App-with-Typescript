@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const secretKey = process.env.PAYLOAD_SECRET as string
 
-if (typeof secretKey === undefined) {
+if (!secretKey) {
     throw new Error('Missing required environment variable for User Authentication');
     // process.exit(1)
 };

@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 require('dotenv').config();
 const secretKey = process.env.PAYLOAD_SECRET;
-if (typeof secretKey === undefined) {
+if (!secretKey) {
     throw new Error('Missing required environment variable for User Authentication');
     // process.exit(1)
 }
