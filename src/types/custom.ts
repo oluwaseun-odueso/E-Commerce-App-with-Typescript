@@ -1,4 +1,4 @@
-export type UUser = {
+export type User = {
     id: number,
     first_name: string,
     last_name: string,
@@ -10,7 +10,7 @@ export type UUser = {
     postal_code: number
 };
 
-export type SSeller = {
+export type Seller = {
     id: number,
     first_name: string,
     last_name: string,

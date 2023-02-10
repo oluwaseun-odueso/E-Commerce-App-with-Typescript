@@ -43,11 +43,3 @@ async function verifyUserToken(req, res, next) {
     }
 }
 exports.verifyUserToken = verifyUserToken;
-// // const tokenFunctions = {
-// //     generateToken,
-// //     verifyUserToken,
-// // }
-// export default {
-//     generateToken,
-//     verifyUserToken,
-// };

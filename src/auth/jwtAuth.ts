@@ -38,13 +38,3 @@ export async function verifyUserToken(req: Request, res: Response, next: NextFun
         });
     }
 }
-
-// // const tokenFunctions = {
-// //     generateToken,
-// //     verifyUserToken,
-// // }
-
-// export default {
-//     generateToken,
-//     verifyUserToken,
-// };
