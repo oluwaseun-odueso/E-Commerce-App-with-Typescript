@@ -4,7 +4,7 @@ export type User = {
     last_name: string,
     email: string,
     phone_number: number,
-    password: string,
+    hashed_password: string,
     address: string,
     state: string,
     postal_code: number

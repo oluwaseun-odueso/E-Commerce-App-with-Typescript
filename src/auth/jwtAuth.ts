@@ -1,6 +1,7 @@
 import {Request, Response, NextFunction} from "express";
 import jwt from 'jsonwebtoken';
 import {UserType} from '../functions/userFunctions'
+import { User } from "../types/custom";
 require('dotenv').config();
 
 const secretKey = process.env.PAYLOAD_SECRET as string
@@ -29,7 +30,7 @@ export async function verifyUserToken(req: Request, res: Response, next: NextFun
     }
 
     try {
-        const user = jwt.verify(token, secretKey) as UserType;
+        const user = jwt.verify(token, secretKey) as User;
         req.user = user;
         next();
     } catch (error) {

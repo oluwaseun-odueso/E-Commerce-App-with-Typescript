@@ -17,7 +17,6 @@ User.init({
     },
     last_name: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false
     },
     email: {
         type: sequelize_1.DataTypes.STRING,
