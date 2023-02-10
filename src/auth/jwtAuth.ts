@@ -9,7 +9,7 @@ if (!secretKey) {
     throw new Error('Missing required environment variable for User Authentication');
 };
 
-function generateToken(payload: UserType): Promise<string> {
+export function generateToken(payload: UserType): Promise<string> {
     return new Promise((resolve, reject) => {
         jwt.sign(payload, secretKey, {expiresIn: '10m'}, (error, token) => {
             if (error) { 
@@ -19,7 +19,7 @@ function generateToken(payload: UserType): Promise<string> {
     })
 }
 
-async function verifyUserToken(req: Request, res: Response, next: NextFunction) {
+export async function verifyUserToken(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
     if (!token) {
@@ -39,9 +39,12 @@ async function verifyUserToken(req: Request, res: Response, next: NextFunction) 
     }
 }
 
-const tokenFunctions = {
-    generateToken,
-    verifyUserToken,
-}
+// // const tokenFunctions = {
+// //     generateToken,
+// //     verifyUserToken,
+// // }
 
-export default tokenFunctions;
+// export default {
+//     generateToken,
+//     verifyUserToken,
+// };

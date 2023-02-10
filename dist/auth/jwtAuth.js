@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.verifyUserToken = exports.generateToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 require('dotenv').config();
 const secretKey = process.env.PAYLOAD_SECRET;
@@ -21,6 +22,7 @@ function generateToken(payload) {
         });
     });
 }
+exports.generateToken = generateToken;
 async function verifyUserToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
@@ -40,8 +42,12 @@ async function verifyUserToken(req, res, next) {
         });
     }
 }
-const tokenFunctions = {
-    generateToken,
-    verifyUserToken,
-};
-exports.default = tokenFunctions;
+exports.verifyUserToken = verifyUserToken;
+// // const tokenFunctions = {
+// //     generateToken,
+// //     verifyUserToken,
+// // }
+// export default {
+//     generateToken,
+//     verifyUserToken,
+// };
