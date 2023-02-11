@@ -20,10 +20,6 @@ User.init({
     type: DataTypes.STRING,
     allowNull: false
   },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
   address: {
     type: DataTypes.STRING,
     allowNull: false
@@ -34,6 +30,10 @@ User.init({
   },
   postal_code : {
     type: DataTypes.INTEGER,
+  },
+  hashed_password: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
   image_key: {
     type: DataTypes.STRING,

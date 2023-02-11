@@ -58,7 +58,7 @@ export async function checkPhoneNumber(phone_number: string): Promise<boolean> {
 export async function getUserByEmail(email: string) {
     try {
         const result = await User.findOne({
-            attributes: { exclude: ['password' ,'image_key']},
+            attributes: { exclude: ['hashed_password' ,'image_key']},
             where: { email }
         })
         return result

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.signUpUser = void 0;
 const userFunctions_1 = require("../functions/userFunctions");
 const signUpUser = async (req, res) => {
-    console.log(req.body);
+    console.log(req.body.password);
     try {
         if (!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.phone_number || !req.body.password || !req.body.address || !req.body.state || !req.body.postal_code) {
             res.status(400).json({

@@ -55,7 +55,7 @@ exports.checkPhoneNumber = checkPhoneNumber;
 async function getUserByEmail(email) {
     try {
         const result = await user_1.User.findOne({
-            attributes: { exclude: ['password', 'image_key'] },
+            attributes: { exclude: ['hashed_password', 'image_key'] },
             where: { email }
         });
         return result;

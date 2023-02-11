@@ -9,7 +9,7 @@ import {
 } from '../functions/userFunctions';
 
 export const signUpUser = async(req: Request, res: Response) => {
-    console.log(req.body);
+    console.log(req.body.password);
     try {
         if (!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.phone_number || !req.body.password || !req.body.address || !req.body.state || !req.body.postal_code) {
             res.status(400).json({ 

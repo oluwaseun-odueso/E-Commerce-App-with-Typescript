@@ -26,10 +26,6 @@ User.init({
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
-    password: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false
-    },
     address: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
@@ -40,6 +36,10 @@ User.init({
     },
     postal_code: {
         type: sequelize_1.DataTypes.INTEGER,
+    },
+    hashed_password: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
     },
     image_key: {
         type: sequelize_1.DataTypes.STRING,
