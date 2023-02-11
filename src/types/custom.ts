@@ -3,7 +3,7 @@ export type User = {
     first_name: string,
     last_name: string,
     email: string,
-    phone_number: number,
+    phone_number: string,
     hashed_password: string,
     address: string,
     state: string,
@@ -17,7 +17,7 @@ export type Seller = {
     email: string,
     password: string, 
     store_id: number, 
-    phone_number: number,
+    phone_number: string,
     address: string
 };
 

@@ -6,10 +6,10 @@ export type UserType = {
     last_name?: string,
     email: string,
     phone_number: string,
-    hashed_password?: string,
     address: string,
     state: string,
-    postal_code?: number
+    postal_code?: number,
+    hashed_password?: string,
     image_key?: string
 }
 

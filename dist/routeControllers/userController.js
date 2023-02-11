@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.signUpUser = void 0;
 const userFunctions_1 = require("../functions/userFunctions");
 const signUpUser = async (req, res) => {
+    console.log(req.body);
     try {
         if (!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.phone_number || !req.body.password || !req.body.address || !req.body.state || !req.body.postal_code) {
             res.status(400).json({
@@ -21,7 +22,7 @@ const signUpUser = async (req, res) => {
             return;
         }
         const hashed_password = await (0, userFunctions_1.hashUserPassword)(password);
-        const userDetails = { first_name, last_name, email, phone_number, hashed_password, address, state, postal_code };
+        const userDetails = { first_name, last_name, email, phone_number, address, state, postal_code, hashed_password };
         await (0, userFunctions_1.createUser)(userDetails);
         const user = await (0, userFunctions_1.getUserByEmail)(email);
         res.status(201).send({ message: "Your account has been created", user });
