@@ -5,11 +5,12 @@ import {
     hashUserPassword, 
     checkEmail, 
     checkPhoneNumber, 
-    getUserByEmail
+    getUserByEmail,
+    retrieveHashedPassword,
+    confirmRetrievedPassword
 } from '../functions/userFunctions';
 
 export const signUpUser = async(req: Request, res: Response) => {
-    console.log(req.body.password);
     try {
         if (!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.phone_number || !req.body.password || !req.body.address || !req.body.state || !req.body.postal_code) {
             res.status(400).json({ 
@@ -44,3 +45,34 @@ export const signUpUser = async(req: Request, res: Response) => {
         });
     };
 };
+
+export const loginUser = async(req: Request, res: Response) {
+    try {
+        if (!req.body.email || !req.body.password) {
+            res.status(400).json({ 
+                success: false, 
+                message: "Please enter email and password"
+            });
+            return;
+        }
+
+        const {email, password} = req.body
+
+        const collectedPassword = await retrieveHashedPassword(email)
+            if (await confirmRetrievedPassword(password, collectedPassword.password) !== true) {
+                res.status(400).send({message: "You have entered an incorrect password"})
+                return
+            }
+
+    } catch (error: any) {
+        return res.status(500).json({
+            success: false,
+            message: 'Error loggin in',
+            error: error.message
+        });
+    }
+}
+
+function collectEmailHashedPassword(email: any) {
+    throw new Error('Function not implemented.');
+}

@@ -1,9 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signUpUser = void 0;
+exports.loginUser = exports.signUpUser = void 0;
 const userFunctions_1 = require("../functions/userFunctions");
 const signUpUser = async (req, res) => {
-    console.log(req.body.password);
     try {
         if (!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.phone_number || !req.body.password || !req.body.address || !req.body.state || !req.body.postal_code) {
             res.status(400).json({
@@ -37,3 +36,31 @@ const signUpUser = async (req, res) => {
     ;
 };
 exports.signUpUser = signUpUser;
+const loginUser = async (req, res) => {
+    try {
+        if (!req.body.email || !req.body.password) {
+            res.status(400).json({
+                success: false,
+                message: "Please enter email and password"
+            });
+            return;
+        }
+        const { email, password } = req.body;
+        const collectedPassword = await (0, userFunctions_1.retrieveHashedPassword)(email);
+        if (await (0, userFunctions_1.confirmRetrievedPassword)(password, collectedPassword.password) !== true) {
+            res.status(400).send({ message: "You have entered an incorrect password" });
+            return;
+        }
+    }
+    catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Error loggin in',
+            error: error.message
+        });
+    }
+};
+exports.loginUser = loginUser;
+function collectEmailHashedPassword(email) {
+    throw new Error('Function not implemented.');
+}
