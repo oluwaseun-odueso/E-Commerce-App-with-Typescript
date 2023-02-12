@@ -54,7 +54,7 @@ export async function checkPhoneNumber(phone_number: string): Promise<boolean | 
     }
 }
 
-export async function getUserByEmail(email: string): Promise<{}> {
+export async function getUserByEmail(email: string): Promise<UserType> {
     try {
         const user = await User.findOne({
             attributes: { exclude: ['hashed_password' ,'image_key']},

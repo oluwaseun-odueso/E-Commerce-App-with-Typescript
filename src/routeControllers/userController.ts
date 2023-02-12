@@ -1,4 +1,5 @@
-import {Request, Response, NextFunction} from 'express'
+import e, {Request, Response, NextFunction} from 'express'
+import { generateToken } from '../auth/jwtAuth';
 import {UserType} from '../functions/userFunctions'
 import {
     createUser, 
@@ -23,11 +24,11 @@ export const signUpUser = async(req: Request, res: Response) => {
         const {first_name, last_name, email, phone_number, password, address, state, postal_code} = req.body
 
         if (await checkEmail(email)) { 
-            res.status(400).send({message: "Email already exists"}) 
+            res.status(400).send({ success: false, message: "Email already exists"}) 
             return
         }
         if (await checkPhoneNumber(phone_number)) {
-            res.status(400).send({message: "Phone number already exists"}) 
+            res.status(400).send({ success: false, message: "Phone number already exists"}) 
             return
         }
 
@@ -35,7 +36,7 @@ export const signUpUser = async(req: Request, res: Response) => {
         const userDetails: UserType = {first_name, last_name, email, phone_number, address, state, postal_code, hashed_password}
         await createUser(userDetails)
         const user = await getUserByEmail(email)
-        res.status(201).send({ message : "Your account has been created", user})   
+        res.status(201).send({ success: true, message : "Your account has been created", user})   
 
         } catch (error: any) {
         return res.status(500).json({
@@ -55,15 +56,22 @@ export const loginUser = async(req: Request, res: Response) => {
             });
             return;
         }
-
         const {email, password} = req.body
 
-        const collectedPassword = await retrieveHashedPassword(email)
-            if (await confirmRetrievedPassword(password, collectedPassword) !== true) {
-                res.status(400).send({message: "You have entered an incorrect password"})
-                return
-            }
+        const collectedUserPassword = await retrieveHashedPassword(email)
+            if (await confirmRetrievedPassword(password, collectedUserPassword) !== true) {
+                res.status(400).send({ success: false, message: "You have entered an incorrect password"})
+                return;
+            };
 
+            const user = await getUserByEmail(email);
+            const token = await generateToken(user);
+            res.status(200).send({
+                success: true,
+                message: "You have successfully logged in",
+                user, 
+                token
+            })
     } catch (error: any) {
         return res.status(500).json({
             success: false,
