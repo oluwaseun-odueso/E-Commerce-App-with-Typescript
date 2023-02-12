@@ -13,22 +13,22 @@ export type UserType = {
     image_key?: string
 }
 
-export async function createUser(userDetails: UserType) {
+export async function createUser(userDetails: UserType): Promise<{}> {
     try {
         const user = await User.create(userDetails)
-        return user
+        return JSON.parse(JSON.stringify(user))
     } catch (error) {
-        return new Error(`Error creating user: ${error}`)
+        throw new Error(`Error creating user: ${error}`)
     }
 }
 
-export async function hashUserPassword (password: string): Promise<string | Error> {
+export async function hashUserPassword (password: string): Promise<string> {
     try {
         const saltRounds: number = 10;
         const hash = await bcrypt.hash(password, saltRounds);
         return hash
     } catch (error) {
-        return new Error(`Error generating password hash: ${error}`);
+        throw new Error(`Error generating password hash: ${error}`);
     }
 }
 
@@ -39,7 +39,7 @@ export async function checkEmail (email: string): Promise<boolean | Error> {
         })
         return emailCheck ? true : false
     } catch (error) {
-        return new Error(`Error checking email: ${error}`)
+        throw new Error(`Error checking email: ${error}`)
     }
 }
 
@@ -50,39 +50,39 @@ export async function checkPhoneNumber(phone_number: string): Promise<boolean | 
         })
         return phoneNumberCheck ? true : false
     } catch (error) {
-        return new Error(`Error checking phone_number: ${error}`)
+        throw new Error(`Error checking phone_number: ${error}`)
     }
 }
 
-export async function getUserByEmail(email: string) {
+export async function getUserByEmail(email: string): Promise<{}> {
     try {
-        const result = await User.findOne({
+        const user = await User.findOne({
             attributes: { exclude: ['hashed_password' ,'image_key']},
             where: { email }
         })
-        return result
+        return JSON.parse(JSON.stringify(user))
     } catch (error) {
-        return new Error(`Error getting user by email: ${error}`)
+        throw new Error(`Error getting user by email: ${error}`)
     }
 }
 
-export async function retrieveHashedPassword(email: string) {
+export async function retrieveHashedPassword(email: string): Promise<string> {
     try {
         const userPassword = await User.findOne({
             attributes: ["hashed_password"],
             where: {email}
         });
-        return userPassword;
+        return JSON.parse(JSON.stringify(userPassword)).hashed_password;
     } catch (error) {
-        return new Error(`Error retrieving user password: ${error}`)
+        throw new Error(`Error retrieving user password: ${error}`)
     }
 }
 
-export async function confirmRetrievedPassword(password: string, hashedPassword: string) {
+export async function confirmRetrievedPassword(password: string, hashedPassword: string): Promise<boolean> {
     try {
         const confirmPassword = await bcrypt.compare(password, hashedPassword)
         return confirmPassword;
     } catch (error) {
-        return new Error(`Error comfirming user password: ${error}`)
+        throw new Error(`Error comfirming user password: ${error}`)
     };
 };

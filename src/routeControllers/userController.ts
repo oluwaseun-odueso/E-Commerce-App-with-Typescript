@@ -46,7 +46,7 @@ export const signUpUser = async(req: Request, res: Response) => {
     };
 };
 
-export const loginUser = async(req: Request, res: Response) {
+export const loginUser = async(req: Request, res: Response) => {
     try {
         if (!req.body.email || !req.body.password) {
             res.status(400).json({ 
@@ -59,7 +59,7 @@ export const loginUser = async(req: Request, res: Response) {
         const {email, password} = req.body
 
         const collectedPassword = await retrieveHashedPassword(email)
-            if (await confirmRetrievedPassword(password, collectedPassword.password) !== true) {
+            if (await confirmRetrievedPassword(password, collectedPassword) !== true) {
                 res.status(400).send({message: "You have entered an incorrect password"})
                 return
             }
@@ -71,8 +71,4 @@ export const loginUser = async(req: Request, res: Response) {
             error: error.message
         });
     }
-}
-
-function collectEmailHashedPassword(email: any) {
-    throw new Error('Function not implemented.');
 }

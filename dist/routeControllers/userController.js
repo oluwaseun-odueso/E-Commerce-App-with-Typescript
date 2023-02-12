@@ -47,7 +47,7 @@ const loginUser = async (req, res) => {
         }
         const { email, password } = req.body;
         const collectedPassword = await (0, userFunctions_1.retrieveHashedPassword)(email);
-        if (await (0, userFunctions_1.confirmRetrievedPassword)(password, collectedPassword.password) !== true) {
+        if (await (0, userFunctions_1.confirmRetrievedPassword)(password, collectedPassword) !== true) {
             res.status(400).send({ message: "You have entered an incorrect password" });
             return;
         }
@@ -61,6 +61,3 @@ const loginUser = async (req, res) => {
     }
 };
 exports.loginUser = loginUser;
-function collectEmailHashedPassword(email) {
-    throw new Error('Function not implemented.');
-}
