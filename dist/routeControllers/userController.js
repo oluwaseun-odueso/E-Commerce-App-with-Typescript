@@ -47,13 +47,18 @@ const loginUser = async (req, res) => {
             return;
         }
         const { email, password } = req.body;
+        const user = await (0, userFunctions_1.getUserByEmail)(email);
+        if (!user) {
+            res.status(400).send({ success: false, message: "Email does not exist" });
+            return;
+        }
+        ;
         const collectedUserPassword = await (0, userFunctions_1.retrieveHashedPassword)(email);
         if (await (0, userFunctions_1.confirmRetrievedPassword)(password, collectedUserPassword) !== true) {
             res.status(400).send({ success: false, message: "You have entered an incorrect password" });
             return;
         }
         ;
-        const user = await (0, userFunctions_1.getUserByEmail)(email);
         const token = await (0, jwtAuth_1.generateToken)(user);
         res.status(200).send({
             success: true,
@@ -65,7 +70,7 @@ const loginUser = async (req, res) => {
     catch (error) {
         return res.status(500).json({
             success: false,
-            message: 'Error loggin in',
+            message: 'Error logging in',
             error: error.message
         });
     }

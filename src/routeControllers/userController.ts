@@ -58,13 +58,18 @@ export const loginUser = async(req: Request, res: Response) => {
         }
         const {email, password} = req.body
 
+        const user = await getUserByEmail(email);
+        if (!user) {
+            res.status(400).send({ success: false, message: "Email does not exist"})
+            return;
+        };
+
         const collectedUserPassword = await retrieveHashedPassword(email)
             if (await confirmRetrievedPassword(password, collectedUserPassword) !== true) {
                 res.status(400).send({ success: false, message: "You have entered an incorrect password"})
                 return;
             };
 
-            const user = await getUserByEmail(email);
             const token = await generateToken(user);
             res.status(200).send({
                 success: true,
@@ -75,7 +80,7 @@ export const loginUser = async(req: Request, res: Response) => {
     } catch (error: any) {
         return res.status(500).json({
             success: false,
-            message: 'Error loggin in',
+            message: 'Error logging in',
             error: error.message
         });
     }
