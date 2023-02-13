@@ -103,3 +103,14 @@ export async function confirmRetrievedPassword(password: string, hashedPassword:
         throw new Error(`Error comfirming user password: ${error}`)
     };
 };
+
+export async function updateUserAccountDetails(id: number, first_name: string, last_name: string, email: string, phone_number: string, address: string, state: string, postal_code: number) {
+    try {
+        const updated = await User.update({first_name, last_name, email, phone_number, address, state, postal_code}, {
+            where: { id }
+        })
+        return updated
+    } catch (error) {
+        throw new Error(`Error updating user details: ${error}`)
+    }
+};

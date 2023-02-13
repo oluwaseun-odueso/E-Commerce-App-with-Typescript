@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.confirmRetrievedPassword = exports.retrieveHashedPassword = exports.getUserById = exports.getUserByEmail = exports.checkIfEntriesMatch = exports.checkPhoneNumber = exports.checkEmail = exports.hashUserPassword = exports.createUser = void 0;
+exports.updateUserAccountDetails = exports.confirmRetrievedPassword = exports.retrieveHashedPassword = exports.getUserById = exports.getUserByEmail = exports.checkIfEntriesMatch = exports.checkPhoneNumber = exports.checkEmail = exports.hashUserPassword = exports.createUser = void 0;
 const user_1 = require("../models/user");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 async function createUser(userDetails) {
@@ -107,4 +107,17 @@ async function confirmRetrievedPassword(password, hashedPassword) {
     ;
 }
 exports.confirmRetrievedPassword = confirmRetrievedPassword;
+;
+async function updateUserAccountDetails(id, first_name, last_name, email, phone_number, address, state, postal_code) {
+    try {
+        const updated = await user_1.User.update({ first_name, last_name, email, phone_number, address, state, postal_code }, {
+            where: { id }
+        });
+        return updated;
+    }
+    catch (error) {
+        throw new Error(`Error updating user details: ${error}`);
+    }
+}
+exports.updateUserAccountDetails = updateUserAccountDetails;
 ;

@@ -9,7 +9,8 @@ import {
     checkIfEntriesMatch, 
     getUserByEmail,
     retrieveHashedPassword,
-    confirmRetrievedPassword
+    confirmRetrievedPassword,
+    updateUserAccountDetails
 } from '../functions/userFunctions';
 
 export async function signUpUser (req: Request, res: Response) {
@@ -114,6 +115,13 @@ export async function updateUserAccount (req: Request, res: Response) {
             return;
         };
 
+        await updateUserAccountDetails(req.user.id, first_name, last_name, email, phone_number, address, state, postal_code)
+        const updated = await getUserById(req.user.id)
+        res.status(200).send({
+            success: true,
+            message: 'User account details updated', 
+            updated
+        });
     } catch (error: any) {
         return res.status(500).json({
             success: false,

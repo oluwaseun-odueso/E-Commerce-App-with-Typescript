@@ -108,6 +108,13 @@ async function updateUserAccount(req, res) {
             return;
         }
         ;
+        await (0, userFunctions_2.updateUserAccountDetails)(req.user.id, first_name, last_name, email, phone_number, address, state, postal_code);
+        const updated = await (0, userFunctions_1.getUserById)(req.user.id);
+        res.status(200).send({
+            success: true,
+            message: 'User account details updated',
+            updated
+        });
     }
     catch (error) {
         return res.status(500).json({
