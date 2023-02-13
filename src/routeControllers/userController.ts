@@ -1,17 +1,18 @@
 import e, {Request, Response, NextFunction} from 'express'
 import { generateToken } from '../auth/jwtAuth';
-import {UserType} from '../functions/userFunctions'
+import {getUserById, UserType} from '../functions/userFunctions'
 import {
     createUser, 
     hashUserPassword, 
     checkEmail, 
-    checkPhoneNumber, 
+    checkPhoneNumber,
+    checkIfEntriesMatch, 
     getUserByEmail,
     retrieveHashedPassword,
     confirmRetrievedPassword
 } from '../functions/userFunctions';
 
-export const signUpUser = async(req: Request, res: Response) => {
+export async function signUpUser (req: Request, res: Response) {
     try {
         if (!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.phone_number || !req.body.password || !req.body.address || !req.body.state || !req.body.postal_code) {
             res.status(400).json({ 
@@ -47,7 +48,7 @@ export const signUpUser = async(req: Request, res: Response) => {
     };
 };
 
-export const loginUser = async(req: Request, res: Response) => {
+export async function loginUser (req: Request, res: Response) {
     try {
         if (!req.body.email || !req.body.password) {
             res.status(400).json({ 
@@ -77,6 +78,42 @@ export const loginUser = async(req: Request, res: Response) => {
                 user, 
                 token
             })
+    } catch (error: any) {
+        return res.status(500).json({
+            success: false,
+            message: 'Error logging in',
+            error: error.message
+        });
+    };
+};
+
+export async function updateUserAccount (req: Request, res: Response) {
+    try {
+        if (!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.phone_number || !req.body.address || !req.body.state || !req.body.postal_code) {
+            res.status(400).json({ 
+                success: false, 
+                message: "Please enter required fields"
+            });
+            return;
+        };
+
+        const {first_name, last_name, email, phone_number, address, state, postal_code} = req.body;
+        const user = await getUserById(req.user.id)
+        if ( await checkEmail (email) && ! checkIfEntriesMatch(user.email, email)) {
+            res.status(400).send({
+                success: false,
+                message: "Email already exists"
+            })
+            return;
+        };
+        if ( await checkPhoneNumber (phone_number) && ! checkIfEntriesMatch(user.phone_number, phone_number)) {
+            res.status(400).send({
+                success: false,
+                message: "Phone number already exists"
+            })
+            return;
+        };
+
     } catch (error: any) {
         return res.status(500).json({
             success: false,

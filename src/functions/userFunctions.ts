@@ -1,5 +1,6 @@
 import {User} from '../models/user';
 import bcrypt, { hash } from 'bcrypt';
+import { updateUserAccount } from '../routeControllers/userController';
 
 export type UserType = {
     first_name: string, 
@@ -51,7 +52,11 @@ export async function checkPhoneNumber(phone_number: string): Promise<boolean | 
         return phoneNumberCheck ? true : false
     } catch (error) {
         throw new Error(`Error checking phone_number: ${error}`)
-    }
+    };
+};
+
+export function checkIfEntriesMatch(firstValue: string, secondValue: string): boolean {
+    return firstValue === secondValue;
 }
 
 export async function getUserByEmail(email: string): Promise<UserType> {
@@ -63,6 +68,18 @@ export async function getUserByEmail(email: string): Promise<UserType> {
         return JSON.parse(JSON.stringify(user))
     } catch (error) {
         throw new Error(`Error getting user by email: ${error}`)
+    }
+}
+
+export async function getUserById(id: number): Promise<UserType> {
+    try {
+        const user = await User.findOne({
+            attributes: { exclude: ['hashed_password' ,'image_key']},
+            where: { id }
+        })
+        return JSON.parse(JSON.stringify(user))
+    } catch (error) {
+        throw new Error(`Error getting user by id: ${error}`)
     }
 }
 

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.confirmRetrievedPassword = exports.retrieveHashedPassword = exports.getUserByEmail = exports.checkPhoneNumber = exports.checkEmail = exports.hashUserPassword = exports.createUser = void 0;
+exports.confirmRetrievedPassword = exports.retrieveHashedPassword = exports.getUserById = exports.getUserByEmail = exports.checkIfEntriesMatch = exports.checkPhoneNumber = exports.checkEmail = exports.hashUserPassword = exports.createUser = void 0;
 const user_1 = require("../models/user");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 async function createUser(userDetails) {
@@ -49,8 +49,14 @@ async function checkPhoneNumber(phone_number) {
     catch (error) {
         throw new Error(`Error checking phone_number: ${error}`);
     }
+    ;
 }
 exports.checkPhoneNumber = checkPhoneNumber;
+;
+function checkIfEntriesMatch(firstValue, secondValue) {
+    return firstValue === secondValue;
+}
+exports.checkIfEntriesMatch = checkIfEntriesMatch;
 async function getUserByEmail(email) {
     try {
         const user = await user_1.User.findOne({
@@ -64,6 +70,19 @@ async function getUserByEmail(email) {
     }
 }
 exports.getUserByEmail = getUserByEmail;
+async function getUserById(id) {
+    try {
+        const user = await user_1.User.findOne({
+            attributes: { exclude: ['hashed_password', 'image_key'] },
+            where: { id }
+        });
+        return JSON.parse(JSON.stringify(user));
+    }
+    catch (error) {
+        throw new Error(`Error getting user by id: ${error}`);
+    }
+}
+exports.getUserById = getUserById;
 async function retrieveHashedPassword(email) {
     try {
         const userPassword = await user_1.User.findOne({

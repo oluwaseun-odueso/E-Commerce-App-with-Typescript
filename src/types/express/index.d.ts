@@ -5,11 +5,11 @@ export {};
 declare global {
     namespace Express {
         export interface Request {
-            user?: User,
-            seller?: Seller,
-            store?: Store,
-            product?: Product,
-            order?: Order
+            user: User,
+            seller: Seller,
+            store: Store,
+            product: Product,
+            order: Order
         }
     }
 }
