@@ -62,7 +62,7 @@ export function checkIfEntriesMatch(firstValue: string, secondValue: string): bo
 export async function getUserByEmail(email: string): Promise<UserType> {
     try {
         const user = await User.findOne({
-            attributes: { exclude: ['hashed_password' ,'image_key']},
+            attributes: { exclude: ['hashed_password' ,'image_key', 'createdAt', 'updatedAt']},
             where: { email }
         })
         return JSON.parse(JSON.stringify(user))
@@ -74,7 +74,7 @@ export async function getUserByEmail(email: string): Promise<UserType> {
 export async function getUserById(id: number): Promise<UserType> {
     try {
         const user = await User.findOne({
-            attributes: { exclude: ['hashed_password' ,'image_key']},
+            attributes: { exclude: ['hashed_password' ,'image_key', 'createdAt', 'updatedAt']},
             where: { id }
         })
         return JSON.parse(JSON.stringify(user))

@@ -125,7 +125,30 @@ export async function updateUserAccount (req: Request, res: Response) {
     } catch (error: any) {
         return res.status(500).json({
             success: false,
-            message: 'Error logging in',
+            message: 'Error updating user account',
+            error: error.message
+        });
+    };
+};
+
+export async function getUserAccount (req: Request, res: Response) {
+    try {
+        const user = await getUserById(req.user.id);
+        if (!user) {
+            res.status(400).send({
+                success: false,
+                message: "Oops! You do not have an account, sign up to continue."
+            });
+            return;
+        };
+        res.status(200).send({ 
+            success: true,
+            user
+        })
+    } catch (error: any) {
+        return res.status(500).json({
+            success: false,
+            message: 'Error getting account details',
             error: error.message
         });
     }

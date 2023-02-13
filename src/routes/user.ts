@@ -5,11 +5,13 @@ const router: Router = express.Router()
 import {
     signUpUser,
     loginUser,
-    updateUserAccount
+    updateUserAccount,
+    getUserAccount
 } from "../routeControllers/userController"
 
 router.post('/signup', signUpUser)
 router.post('/login', loginUser)
 router.put('/update_account', verifyUserToken, updateUserAccount)
+router.get('/get_user_account', verifyUserToken, getUserAccount)
 
 module.exports = router

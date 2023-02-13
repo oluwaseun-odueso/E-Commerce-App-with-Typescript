@@ -60,7 +60,7 @@ exports.checkIfEntriesMatch = checkIfEntriesMatch;
 async function getUserByEmail(email) {
     try {
         const user = await user_1.User.findOne({
-            attributes: { exclude: ['hashed_password', 'image_key'] },
+            attributes: { exclude: ['hashed_password', 'image_key', 'createdAt', 'updatedAt'] },
             where: { email }
         });
         return JSON.parse(JSON.stringify(user));
@@ -73,7 +73,7 @@ exports.getUserByEmail = getUserByEmail;
 async function getUserById(id) {
     try {
         const user = await user_1.User.findOne({
-            attributes: { exclude: ['hashed_password', 'image_key'] },
+            attributes: { exclude: ['hashed_password', 'image_key', 'createdAt', 'updatedAt'] },
             where: { id }
         });
         return JSON.parse(JSON.stringify(user));

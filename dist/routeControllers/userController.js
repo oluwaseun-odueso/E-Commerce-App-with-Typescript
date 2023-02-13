@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUserAccount = exports.loginUser = exports.signUpUser = void 0;
+exports.getUserAccount = exports.updateUserAccount = exports.loginUser = exports.signUpUser = void 0;
 const jwtAuth_1 = require("../auth/jwtAuth");
 const userFunctions_1 = require("../functions/userFunctions");
 const userFunctions_2 = require("../functions/userFunctions");
@@ -119,9 +119,36 @@ async function updateUserAccount(req, res) {
     catch (error) {
         return res.status(500).json({
             success: false,
-            message: 'Error logging in',
+            message: 'Error updating user account',
+            error: error.message
+        });
+    }
+    ;
+}
+exports.updateUserAccount = updateUserAccount;
+;
+async function getUserAccount(req, res) {
+    try {
+        const user = await (0, userFunctions_1.getUserById)(req.user.id);
+        if (!user) {
+            res.status(400).send({
+                success: false,
+                message: "Oops! You do not have an account, sign up to continue."
+            });
+            return;
+        }
+        ;
+        res.status(200).send({
+            success: true,
+            user
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Error getting account details',
             error: error.message
         });
     }
 }
-exports.updateUserAccount = updateUserAccount;
+exports.getUserAccount = getUserAccount;

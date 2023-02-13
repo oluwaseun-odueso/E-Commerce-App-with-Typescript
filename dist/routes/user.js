@@ -10,4 +10,5 @@ const userController_1 = require("../routeControllers/userController");
 router.post('/signup', userController_1.signUpUser);
 router.post('/login', userController_1.loginUser);
 router.put('/update_account', jwtAuth_1.verifyUserToken, userController_1.updateUserAccount);
+router.get('/get_user_account', jwtAuth_1.verifyUserToken, userController_1.getUserAccount);
 module.exports = router;
