@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserAccount = exports.updateUserAccount = exports.loginUser = exports.signUpUser = void 0;
+exports.deleteUserAccount = exports.getUserAccount = exports.updateUserAccount = exports.loginUser = exports.signUpUser = void 0;
 const jwtAuth_1 = require("../auth/jwtAuth");
 const userFunctions_1 = require("../functions/userFunctions");
 const userFunctions_2 = require("../functions/userFunctions");
@@ -150,5 +150,31 @@ async function getUserAccount(req, res) {
             error: error.message
         });
     }
+    ;
 }
 exports.getUserAccount = getUserAccount;
+;
+async function deleteUserAccount(req, res) {
+    try {
+        const deletedAccount = await (0, userFunctions_2.deleteAccount)(req.user.id);
+        if (deletedAccount === 1) {
+            res.status(200).send({
+                success: true,
+                message: "Your account has been deleted!"
+            });
+            return;
+        }
+        res.status(400).send({
+            success: false,
+            message: "Account does not exist"
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Could not delete your account',
+            error: error.message
+        });
+    }
+}
+exports.deleteUserAccount = deleteUserAccount;

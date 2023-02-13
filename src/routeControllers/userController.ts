@@ -10,7 +10,8 @@ import {
     getUserByEmail,
     retrieveHashedPassword,
     confirmRetrievedPassword,
-    updateUserAccountDetails
+    updateUserAccountDetails,
+    deleteAccount
 } from '../functions/userFunctions';
 
 export async function signUpUser (req: Request, res: Response) {
@@ -149,6 +150,29 @@ export async function getUserAccount (req: Request, res: Response) {
         return res.status(500).json({
             success: false,
             message: 'Error getting account details',
+            error: error.message
+        });
+    };
+};
+
+export async function deleteUserAccount (req: Request, res: Response) {
+    try {
+        const deletedAccount = await deleteAccount(req.user.id)
+        if (deletedAccount === 1) { 
+            res.status(200).send({
+                success: true,
+                message: "Your account has been deleted!"
+            })
+            return
+        }
+        res.status(400).send({
+            success: false,
+            message: "Account does not exist"
+        })
+    } catch (error: any) {
+        return res.status(500).json({
+            success: false,
+            message: 'Could not delete your account',
             error: error.message
         });
     }

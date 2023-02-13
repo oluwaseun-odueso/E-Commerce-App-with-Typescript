@@ -114,3 +114,15 @@ export async function updateUserAccountDetails(id: number, first_name: string, l
         throw new Error(`Error updating user details: ${error}`)
     }
 };
+
+export async function deleteAccount(id: number): Promise<number> {
+    try {
+        const deletedAccount = await User.destroy({
+            where: {id}
+        })
+        return deletedAccount;
+    } catch (error) {
+        throw new Error(`Error deleting user account: ${error}`)
+    };
+};
+
