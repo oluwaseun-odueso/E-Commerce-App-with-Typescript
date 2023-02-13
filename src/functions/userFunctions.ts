@@ -1,6 +1,5 @@
 import {User} from '../models/user';
 import bcrypt, { hash } from 'bcrypt';
-import { updateUserAccount } from '../routeControllers/userController';
 
 export type UserType = {
     first_name: string, 
