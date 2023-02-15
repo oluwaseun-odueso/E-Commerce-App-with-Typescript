@@ -1,5 +1,5 @@
 import e, {Request, Response, NextFunction} from 'express'
-import { generateToken } from '../auth/jwtAuth';
+import { generateUserToken } from '../auth/jwtAuth';
 import {getUserById, UserType} from '../functions/userFunctions'
 import {
     createUser, 
@@ -73,7 +73,7 @@ export async function loginUser (req: Request, res: Response) {
                 return;
             };
 
-            const token = await generateToken(user);
+            const token = await generateUserToken(user);
             res.status(200).send({
                 success: true,
                 message: "You have successfully logged in",

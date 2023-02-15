@@ -17,10 +17,6 @@ Seller.init({
       type: DataTypes.STRING,
       allowNull: false
     },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     store_id: {
       type: DataTypes.STRING,
     },
@@ -34,6 +30,10 @@ Seller.init({
     },
     image_key: {
       type: DataTypes.STRING,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {
     // Other model options go here

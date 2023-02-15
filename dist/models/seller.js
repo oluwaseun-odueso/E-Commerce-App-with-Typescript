@@ -23,10 +23,6 @@ Seller.init({
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
-    password: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false
-    },
     store_id: {
         type: sequelize_1.DataTypes.STRING,
     },
@@ -40,6 +36,10 @@ Seller.init({
     },
     image_key: {
         type: sequelize_1.DataTypes.STRING,
+    },
+    password: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false
     }
 }, {
     // Other model options go here

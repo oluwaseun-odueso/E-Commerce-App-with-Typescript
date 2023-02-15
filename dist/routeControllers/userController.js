@@ -61,7 +61,7 @@ async function loginUser(req, res) {
             return;
         }
         ;
-        const token = await (0, jwtAuth_1.generateToken)(user);
+        const token = await (0, jwtAuth_1.generateUserToken)(user);
         res.status(200).send({
             success: true,
             message: "You have successfully logged in",
