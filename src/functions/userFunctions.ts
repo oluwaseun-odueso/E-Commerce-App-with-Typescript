@@ -22,7 +22,7 @@ export async function createUser(userDetails: UserType): Promise<{}> {
     }
 }
 
-export async function hashUserPassword (password: string): Promise<string> {
+export async function hashPassword (password: string): Promise<string> {
     try {
         const saltRounds: number = 10;
         const hash = await bcrypt.hash(password, saltRounds);
@@ -32,7 +32,7 @@ export async function hashUserPassword (password: string): Promise<string> {
     }
 }
 
-export async function checkEmail (email: string): Promise<boolean | Error> {
+export async function checkEmail (email: string): Promise<boolean> {
     try {
         const emailCheck = await User.findOne({
             where: {email}
@@ -43,7 +43,7 @@ export async function checkEmail (email: string): Promise<boolean | Error> {
     }
 }
 
-export async function checkPhoneNumber(phone_number: string): Promise<boolean | Error> {
+export async function checkPhoneNumber(phone_number: string): Promise<boolean> {
     try {
         const phoneNumberCheck = await User.findOne({
             where: {phone_number}

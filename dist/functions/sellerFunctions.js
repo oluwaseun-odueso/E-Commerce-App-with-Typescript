@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createSeller = void 0;
+exports.getSellerByEmail = exports.checkPhoneNumber = exports.checkEmail = exports.createSeller = void 0;
 const seller_1 = require("../models/seller");
 async function createSeller(sellerDetails) {
     try {
@@ -12,12 +12,44 @@ async function createSeller(sellerDetails) {
     }
 }
 exports.createSeller = createSeller;
-createSeller({
-    first_name: "Tine",
-    last_name: "Azikwe",
-    email: 'tine@tin.com',
-    phone_number: '0707744338872',
-    address: "23, Kofo Street",
-    password: 'tineazikwe'
-}).then(i => console.log(i))
-    .catch(error => console.log(error));
+async function checkEmail(email) {
+    try {
+        const emailCheck = await seller_1.Seller.findOne({
+            where: { email }
+        });
+        return emailCheck ? true : false;
+    }
+    catch (error) {
+        throw new Error(`Error checking email: ${error}`);
+    }
+    ;
+}
+exports.checkEmail = checkEmail;
+;
+async function checkPhoneNumber(phone_number) {
+    try {
+        const phoneNumberCheck = await seller_1.Seller.findOne({
+            where: { phone_number }
+        });
+        return phoneNumberCheck ? true : false;
+    }
+    catch (error) {
+        throw new Error(`Error checking phone_number: ${error}`);
+    }
+    ;
+}
+exports.checkPhoneNumber = checkPhoneNumber;
+;
+async function getSellerByEmail(email) {
+    try {
+        const seller = await seller_1.Seller.findOne({
+            attributes: { exclude: ['hashed_password', 'image_key', 'createdAt', 'updatedAt'] },
+            where: { email }
+        });
+        return JSON.parse(JSON.stringify(seller));
+    }
+    catch (error) {
+        throw new Error(`Error getting user by email: ${error}`);
+    }
+}
+exports.getSellerByEmail = getSellerByEmail;

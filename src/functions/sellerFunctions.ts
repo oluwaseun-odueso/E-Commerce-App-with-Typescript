@@ -1,5 +1,4 @@
 import {Seller} from '../models/seller';
-import bcrypt from 'bcrypt';
 
 export type SellerType = {
     first_name: string, 
@@ -9,10 +8,10 @@ export type SellerType = {
     phone_number: string,
     address: string,
     image_key?: string,
-    password: string
+    hashed_password: string
 };
 
-export async function createSeller(sellerDetails: SellerType) {
+export async function createSeller(sellerDetails: SellerType): Promise<{}> {
     try {
         const seller = await Seller.create(sellerDetails)
         return JSON.parse(JSON.stringify(seller))
@@ -21,12 +20,36 @@ export async function createSeller(sellerDetails: SellerType) {
     }
 }
 
-createSeller({
-    first_name: "Tine",
-    last_name: "Azikwe",
-    email: 'tine@tin.com',
-    phone_number: '0707744338872',
-    address: "23, Kofo Street",
-    password: 'tineazikwe'
-}).then(i => console.log(i))
-    .catch(error => console.log(error))
+export async function checkEmail (email: string): Promise<boolean> {
+    try {
+        const emailCheck = await Seller.findOne({
+            where: {email}
+        })
+        return emailCheck ? true : false
+    } catch (error) {
+        throw new Error(`Error checking email: ${error}`)
+    };
+};
+
+export async function checkPhoneNumber(phone_number: string): Promise<boolean> {
+    try {
+        const phoneNumberCheck = await Seller.findOne({
+            where: {phone_number}
+        })
+        return phoneNumberCheck ? true : false
+    } catch (error) {
+        throw new Error(`Error checking phone_number: ${error}`)
+    };
+};
+
+export async function getSellerByEmail(email: string): Promise<SellerType> {
+    try {
+        const seller = await Seller.findOne({
+            attributes: { exclude: ['hashed_password' ,'image_key', 'createdAt', 'updatedAt']},
+            where: { email }
+        })
+        return JSON.parse(JSON.stringify(seller))
+    } catch (error) {
+        throw new Error(`Error getting user by email: ${error}`)
+    }
+}

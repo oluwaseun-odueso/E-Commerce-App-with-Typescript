@@ -21,7 +21,7 @@ async function signUpUser(req, res) {
             res.status(400).send({ success: false, message: "Phone number already exists" });
             return;
         }
-        const hashed_password = await (0, userFunctions_1.hashUserPassword)(password);
+        const hashed_password = await (0, userFunctions_1.hashPassword)(password);
         const userDetails = { first_name, last_name, email, phone_number, address, state, postal_code, hashed_password };
         await (0, userFunctions_1.createUser)(userDetails);
         const user = await (0, userFunctions_1.getUserByEmail)(email);

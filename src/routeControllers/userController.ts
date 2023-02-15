@@ -4,7 +4,7 @@ import {
     UserType,
     createUser, 
     getUserById, 
-    hashUserPassword, 
+    hashPassword, 
     checkEmail, 
     checkPhoneNumber,
     checkIfEntriesMatch, 
@@ -36,7 +36,7 @@ export async function signUpUser (req: Request, res: Response) {
             return
         }
 
-        const hashed_password = await hashUserPassword(password)
+        const hashed_password = await hashPassword(password)
         const userDetails: UserType = {first_name, last_name, email, phone_number, address, state, postal_code, hashed_password}
         await createUser(userDetails)
         const user = await getUserByEmail(email)

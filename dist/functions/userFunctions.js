@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteAccount = exports.updateUserAccountDetails = exports.confirmRetrievedPassword = exports.retrieveHashedPassword = exports.getUserById = exports.getUserByEmail = exports.checkIfEntriesMatch = exports.checkPhoneNumber = exports.checkEmail = exports.hashUserPassword = exports.createUser = void 0;
+exports.deleteAccount = exports.updateUserAccountDetails = exports.confirmRetrievedPassword = exports.retrieveHashedPassword = exports.getUserById = exports.getUserByEmail = exports.checkIfEntriesMatch = exports.checkPhoneNumber = exports.checkEmail = exports.hashPassword = exports.createUser = void 0;
 const user_1 = require("../models/user");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 async function createUser(userDetails) {
@@ -16,7 +16,7 @@ async function createUser(userDetails) {
     }
 }
 exports.createUser = createUser;
-async function hashUserPassword(password) {
+async function hashPassword(password) {
     try {
         const saltRounds = 10;
         const hash = await bcrypt_1.default.hash(password, saltRounds);
@@ -26,7 +26,7 @@ async function hashUserPassword(password) {
         throw new Error(`Error generating password hash: ${error}`);
     }
 }
-exports.hashUserPassword = hashUserPassword;
+exports.hashPassword = hashPassword;
 async function checkEmail(email) {
     try {
         const emailCheck = await user_1.User.findOne({
