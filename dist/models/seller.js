@@ -31,7 +31,7 @@ Seller.init({
         allowNull: false
     },
     address: {
-        type: sequelize_1.DataTypes.INTEGER,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
     image_key: {

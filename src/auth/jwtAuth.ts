@@ -2,7 +2,7 @@ import {Request, Response, NextFunction} from "express";
 import jwt from 'jsonwebtoken';
 import {UserType} from '../functions/userFunctions'
 import { User } from "../types/custom";
-import {SellerType} from '../functions/sellerFunction'
+import {SellerType} from '../functions/sellerFunctions'
 import {Seller} from '../types/custom'
 require('dotenv').config();
 

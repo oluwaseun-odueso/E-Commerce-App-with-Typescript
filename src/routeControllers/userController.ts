@@ -1,8 +1,9 @@
-import e, {Request, Response, NextFunction} from 'express'
+import {Request, Response, NextFunction} from 'express'
 import { generateUserToken } from '../auth/jwtAuth';
-import {getUserById, UserType} from '../functions/userFunctions'
 import {
+    UserType,
     createUser, 
+    getUserById, 
     hashUserPassword, 
     checkEmail, 
     checkPhoneNumber,

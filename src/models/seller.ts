@@ -25,7 +25,7 @@ Seller.init({
       allowNull: false
     },
     address : {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false
     },
     image_key: {

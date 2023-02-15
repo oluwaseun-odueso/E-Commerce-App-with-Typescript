@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUserAccount = exports.getUserAccount = exports.updateUserAccount = exports.loginUser = exports.signUpUser = void 0;
 const jwtAuth_1 = require("../auth/jwtAuth");
 const userFunctions_1 = require("../functions/userFunctions");
-const userFunctions_2 = require("../functions/userFunctions");
 async function signUpUser(req, res) {
     try {
         if (!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.phone_number || !req.body.password || !req.body.address || !req.body.state || !req.body.postal_code) {
@@ -14,18 +13,18 @@ async function signUpUser(req, res) {
             return;
         }
         const { first_name, last_name, email, phone_number, password, address, state, postal_code } = req.body;
-        if (await (0, userFunctions_2.checkEmail)(email)) {
+        if (await (0, userFunctions_1.checkEmail)(email)) {
             res.status(400).send({ success: false, message: "Email already exists" });
             return;
         }
-        if (await (0, userFunctions_2.checkPhoneNumber)(phone_number)) {
+        if (await (0, userFunctions_1.checkPhoneNumber)(phone_number)) {
             res.status(400).send({ success: false, message: "Phone number already exists" });
             return;
         }
-        const hashed_password = await (0, userFunctions_2.hashUserPassword)(password);
+        const hashed_password = await (0, userFunctions_1.hashUserPassword)(password);
         const userDetails = { first_name, last_name, email, phone_number, address, state, postal_code, hashed_password };
-        await (0, userFunctions_2.createUser)(userDetails);
-        const user = await (0, userFunctions_2.getUserByEmail)(email);
+        await (0, userFunctions_1.createUser)(userDetails);
+        const user = await (0, userFunctions_1.getUserByEmail)(email);
         res.status(201).send({ success: true, message: "Your account has been created", user });
     }
     catch (error) {
@@ -49,14 +48,14 @@ async function loginUser(req, res) {
             return;
         }
         const { email, password } = req.body;
-        const user = await (0, userFunctions_2.getUserByEmail)(email);
+        const user = await (0, userFunctions_1.getUserByEmail)(email);
         if (!user) {
             res.status(400).send({ success: false, message: "Email does not exist" });
             return;
         }
         ;
-        const collectedUserPassword = await (0, userFunctions_2.retrieveHashedPassword)(email);
-        if (await (0, userFunctions_2.confirmRetrievedPassword)(password, collectedUserPassword) !== true) {
+        const collectedUserPassword = await (0, userFunctions_1.retrieveHashedPassword)(email);
+        if (await (0, userFunctions_1.confirmRetrievedPassword)(password, collectedUserPassword) !== true) {
             res.status(400).send({ success: false, message: "You have entered an incorrect password" });
             return;
         }
@@ -92,7 +91,7 @@ async function updateUserAccount(req, res) {
         ;
         const { first_name, last_name, email, phone_number, address, state, postal_code } = req.body;
         const user = await (0, userFunctions_1.getUserById)(req.user.id);
-        if (await (0, userFunctions_2.checkEmail)(email) && !(0, userFunctions_2.checkIfEntriesMatch)(user.email, email)) {
+        if (await (0, userFunctions_1.checkEmail)(email) && !(0, userFunctions_1.checkIfEntriesMatch)(user.email, email)) {
             res.status(400).send({
                 success: false,
                 message: "Email already exists"
@@ -100,7 +99,7 @@ async function updateUserAccount(req, res) {
             return;
         }
         ;
-        if (await (0, userFunctions_2.checkPhoneNumber)(phone_number) && !(0, userFunctions_2.checkIfEntriesMatch)(user.phone_number, phone_number)) {
+        if (await (0, userFunctions_1.checkPhoneNumber)(phone_number) && !(0, userFunctions_1.checkIfEntriesMatch)(user.phone_number, phone_number)) {
             res.status(400).send({
                 success: false,
                 message: "Phone number already exists"
@@ -108,7 +107,7 @@ async function updateUserAccount(req, res) {
             return;
         }
         ;
-        await (0, userFunctions_2.updateUserAccountDetails)(req.user.id, first_name, last_name, email, phone_number, address, state, postal_code);
+        await (0, userFunctions_1.updateUserAccountDetails)(req.user.id, first_name, last_name, email, phone_number, address, state, postal_code);
         const updated = await (0, userFunctions_1.getUserById)(req.user.id);
         res.status(200).send({
             success: true,
@@ -156,7 +155,7 @@ exports.getUserAccount = getUserAccount;
 ;
 async function deleteUserAccount(req, res) {
     try {
-        const deletedAccount = await (0, userFunctions_2.deleteAccount)(req.user.id);
+        const deletedAccount = await (0, userFunctions_1.deleteAccount)(req.user.id);
         if (deletedAccount === 1) {
             res.status(200).send({
                 success: true,
