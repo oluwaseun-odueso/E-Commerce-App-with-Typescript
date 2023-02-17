@@ -68,7 +68,7 @@ export async function loginSeller(req: Request, res: Response) {
 
         const seller = await getSellerByEmail(email);
         if (!seller) {
-            res.status(400).send({ success: false, message: "Email does not exist"})
+            res.status(400).send({ success: false, message: "The email you entered does not exist"})
             return;
         };
 
@@ -138,4 +138,25 @@ export async function updateSellerAccount(req: Request, res: Response) {
     }
 }
 
-
+export async function getSellerAccount (req:Request, res: Response) {
+    try {
+        const seller = await getSellerById(req.seller.id);
+        if (!seller) {
+            res.status(400).send({
+                success: false,
+                message: "Oops! You do not have an account, sign up to continue."
+            });
+            return;
+        };
+        res.status(200).send({ 
+            success: true,
+            seller
+        })
+    } catch (error: any) {
+        return res.status(500).json({
+            success: false,
+            message: 'Error getting account details',
+            error: error.message
+        });
+    }
+}

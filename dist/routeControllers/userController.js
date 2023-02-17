@@ -50,7 +50,7 @@ async function loginUser(req, res) {
         const { email, password } = req.body;
         const user = await (0, userFunctions_1.getUserByEmail)(email);
         if (!user) {
-            res.status(400).send({ success: false, message: "Email does not exist" });
+            res.status(400).send({ success: false, message: "The email you entered does not exist" });
             return;
         }
         ;
