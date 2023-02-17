@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteAccount = exports.updateUserAccountDetails = exports.confirmRetrievedPassword = exports.retrieveHashedPassword = exports.getUserById = exports.getUserByEmail = exports.checkIfEntriesMatch = exports.checkPhoneNumber = exports.checkEmail = exports.hashPassword = exports.createUser = void 0;
+exports.deleteUserAccount = exports.updateUserAccountDetails = exports.confirmRetrievedPassword = exports.retrieveHashedPassword = exports.getUserById = exports.getUserByEmail = exports.checkIfEntriesMatch = exports.checkPhoneNumber = exports.checkEmail = exports.hashPassword = exports.createUser = void 0;
 const user_1 = require("../models/user");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 async function createUser(userDetails) {
@@ -121,7 +121,7 @@ async function updateUserAccountDetails(id, first_name, last_name, email, phone_
 }
 exports.updateUserAccountDetails = updateUserAccountDetails;
 ;
-async function deleteAccount(id) {
+async function deleteUserAccount(id) {
     try {
         const deletedAccount = await user_1.User.destroy({
             where: { id }
@@ -133,5 +133,5 @@ async function deleteAccount(id) {
     }
     ;
 }
-exports.deleteAccount = deleteAccount;
+exports.deleteUserAccount = deleteUserAccount;
 ;

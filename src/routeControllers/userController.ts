@@ -12,7 +12,7 @@ import {
     retrieveHashedPassword,
     confirmRetrievedPassword,
     updateUserAccountDetails,
-    deleteAccount
+    deleteUserAccount,
 } from '../functions/userFunctions';
 
 export async function signUpUser (req: Request, res: Response) {
@@ -156,9 +156,9 @@ export async function getUserAccount (req: Request, res: Response) {
     };
 };
 
-export async function deleteUserAccount (req: Request, res: Response) {
+export async function deleteAccount (req: Request, res: Response) {
     try {
-        const deletedAccount = await deleteAccount(req.user.id)
+        const deletedAccount = await deleteUserAccount(req.user.id)
         if (deletedAccount === 1) { 
             res.status(200).send({
                 success: true,

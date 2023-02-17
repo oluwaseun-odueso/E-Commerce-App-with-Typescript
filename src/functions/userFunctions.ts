@@ -114,7 +114,7 @@ export async function updateUserAccountDetails(id: number, first_name: string, l
     }
 };
 
-export async function deleteAccount(id: number): Promise<number> {
+export async function deleteUserAccount(id: number): Promise<number> {
     try {
         const deletedAccount = await User.destroy({
             where: {id}

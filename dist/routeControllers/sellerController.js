@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSellerAccount = exports.updateSellerAccount = exports.loginSeller = exports.signUpSeller = void 0;
+exports.deleteAccount = exports.getSellerAccount = exports.updateSellerAccount = exports.loginSeller = exports.signUpSeller = void 0;
 const userFunctions_1 = require("../functions/userFunctions");
 const sellerFunctions_1 = require("../functions/sellerFunctions");
 const jwtAuth_1 = require("../auth/jwtAuth");
@@ -35,8 +35,10 @@ async function signUpSeller(req, res) {
             error: error.message
         });
     }
+    ;
 }
 exports.signUpSeller = signUpSeller;
+;
 async function loginSeller(req, res) {
     try {
         if (!req.body.email || !req.body.password) {
@@ -121,8 +123,10 @@ async function updateSellerAccount(req, res) {
             error: error.message
         });
     }
+    ;
 }
 exports.updateSellerAccount = updateSellerAccount;
+;
 async function getSellerAccount(req, res) {
     try {
         const seller = await (0, sellerFunctions_1.getSellerById)(req.seller.id);
@@ -146,5 +150,34 @@ async function getSellerAccount(req, res) {
             error: error.message
         });
     }
+    ;
 }
 exports.getSellerAccount = getSellerAccount;
+;
+async function deleteAccount(req, res) {
+    try {
+        const deletedAccount = await (0, sellerFunctions_1.deleteSellerAccount)(req.seller.id);
+        if (deletedAccount === 1) {
+            res.status(200).send({
+                success: true,
+                message: "Your account has been deleted!"
+            });
+            return;
+        }
+        ;
+        res.status(400).send({
+            success: false,
+            message: "Account does not exist"
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Could not delete your account',
+            error: error.message
+        });
+    }
+    ;
+}
+exports.deleteAccount = deleteAccount;
+;

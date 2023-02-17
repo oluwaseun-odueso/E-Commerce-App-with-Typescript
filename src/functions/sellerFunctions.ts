@@ -82,9 +82,20 @@ export async function updateSellerAccountDetails(id: number, first_name: string,
     try {
         const updated = await Seller.update({first_name, last_name, email, phone_number, address}, {
             where: { id }
-        })
+        });
         return updated
     } catch (error) {
         throw new Error(`Error updating seller details: ${error}`)
-    }
+    };
+};
+
+export async function deleteSellerAccount(id: number): Promise<number> {
+    try {
+        const deletedAccount = await Seller.destroy({
+            where: {id}
+        })
+        return deletedAccount;
+    } catch (error) {
+        throw new Error(`Error deleting seller account: ${error}`)
+    };
 };

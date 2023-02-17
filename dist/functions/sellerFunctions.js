@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateSellerAccountDetails = exports.retrieveHashedPassword = exports.getSellerById = exports.getSellerByEmail = exports.checkPhoneNumber = exports.checkEmail = exports.createSeller = void 0;
+exports.deleteSellerAccount = exports.updateSellerAccountDetails = exports.retrieveHashedPassword = exports.getSellerById = exports.getSellerByEmail = exports.checkPhoneNumber = exports.checkEmail = exports.createSeller = void 0;
 const seller_1 = require("../models/seller");
 async function createSeller(sellerDetails) {
     try {
@@ -89,6 +89,21 @@ async function updateSellerAccountDetails(id, first_name, last_name, email, phon
     catch (error) {
         throw new Error(`Error updating seller details: ${error}`);
     }
+    ;
 }
 exports.updateSellerAccountDetails = updateSellerAccountDetails;
+;
+async function deleteSellerAccount(id) {
+    try {
+        const deletedAccount = await seller_1.Seller.destroy({
+            where: { id }
+        });
+        return deletedAccount;
+    }
+    catch (error) {
+        throw new Error(`Error deleting seller account: ${error}`);
+    }
+    ;
+}
+exports.deleteSellerAccount = deleteSellerAccount;
 ;

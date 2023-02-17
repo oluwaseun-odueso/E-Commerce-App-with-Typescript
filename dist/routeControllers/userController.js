@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUserAccount = exports.getUserAccount = exports.updateUserAccount = exports.loginUser = exports.signUpUser = void 0;
+exports.deleteAccount = exports.getUserAccount = exports.updateUserAccount = exports.loginUser = exports.signUpUser = void 0;
 const jwtAuth_1 = require("../auth/jwtAuth");
 const userFunctions_1 = require("../functions/userFunctions");
 async function signUpUser(req, res) {
@@ -153,9 +153,9 @@ async function getUserAccount(req, res) {
 }
 exports.getUserAccount = getUserAccount;
 ;
-async function deleteUserAccount(req, res) {
+async function deleteAccount(req, res) {
     try {
-        const deletedAccount = await (0, userFunctions_1.deleteAccount)(req.user.id);
+        const deletedAccount = await (0, userFunctions_1.deleteUserAccount)(req.user.id);
         if (deletedAccount === 1) {
             res.status(200).send({
                 success: true,
@@ -176,4 +176,4 @@ async function deleteUserAccount(req, res) {
         });
     }
 }
-exports.deleteUserAccount = deleteUserAccount;
+exports.deleteAccount = deleteAccount;

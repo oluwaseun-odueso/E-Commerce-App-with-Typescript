@@ -14,10 +14,12 @@ import {
     getSellerById,
     getSellerByEmail,
     retrieveHashedPassword,
-    updateSellerAccountDetails
+    updateSellerAccountDetails,
+    deleteSellerAccount
 } from "../functions/sellerFunctions";
 
 import {generateSellerToken} from '../auth/jwtAuth'
+import { type } from "os";
 
 export async function signUpSeller (req: Request, res: Response) {
     try {
@@ -52,8 +54,8 @@ export async function signUpSeller (req: Request, res: Response) {
             message: 'Error creating seller',
             error: error.message
         });
-    }
-}
+    };
+};
 
 export async function loginSeller(req: Request, res: Response) {
     try {
@@ -135,8 +137,8 @@ export async function updateSellerAccount(req: Request, res: Response) {
             message: 'Error updating seller account',
             error: error.message
         });
-    }
-}
+    };
+};
 
 export async function getSellerAccount (req:Request, res: Response) {
     try {
@@ -158,5 +160,28 @@ export async function getSellerAccount (req:Request, res: Response) {
             message: 'Error getting account details',
             error: error.message
         });
-    }
-}
+    };
+};
+
+export async function deleteAccount(req: Request, res: Response) {
+    try {
+        const deletedAccount = await deleteSellerAccount(req.seller.id)
+        if (deletedAccount === 1) { 
+            res.status(200).send({
+                success: true,
+                message: "Your account has been deleted!"
+            })
+            return
+        };
+        res.status(400).send({
+            success: false,
+            message: "Account does not exist"
+        });
+    } catch (error: any) {
+        return res.status(500).json({
+            success: false,
+            message: 'Could not delete your account',
+            error: error.message
+        });
+    };
+};
