@@ -99,7 +99,7 @@ export async function confirmRetrievedPassword(password: string, hashedPassword:
         const confirmPassword = await bcrypt.compare(password, hashedPassword)
         return confirmPassword;
     } catch (error) {
-        throw new Error(`Error comfirming user password: ${error}`)
+        throw new Error(`Error comfirming password: ${error}`)
     };
 };
 

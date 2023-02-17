@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signUpSeller = void 0;
+exports.loginSeller = exports.signUpSeller = void 0;
 const userFunctions_1 = require("../functions/userFunctions");
 const sellerFunctions_1 = require("../functions/sellerFunctions");
+const jwtAuth_1 = require("../auth/jwtAuth");
 async function signUpSeller(req, res) {
     try {
         if (!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.phone_number || !req.body.address || !req.body.password) {
@@ -36,3 +37,37 @@ async function signUpSeller(req, res) {
     }
 }
 exports.signUpSeller = signUpSeller;
+async function loginSeller(req, res) {
+    try {
+        if (!req.body.email || !req.body.password) {
+            res.status(400).json({
+                success: false,
+                message: "Please enter email and password"
+            });
+            return;
+        }
+        const { email, password } = req.body;
+        const seller = await (0, sellerFunctions_1.getSellerByEmail)(email);
+        if (!seller) {
+            res.status(400).send({ success: false, message: "Email does not exist" });
+            return;
+        }
+        ;
+        const collectedUserPassword = await (0, sellerFunctions_1.retrieveHashedPassword)(email);
+        if (await (0, userFunctions_1.confirmRetrievedPassword)(password, collectedUserPassword) !== true) {
+            res.status(400).send({ success: false, message: "You have entered an incorrect password" });
+            return;
+        }
+        ;
+        const token = await (0, jwtAuth_1.generateSellerToken)(seller);
+        res.status(200).send({
+            success: true,
+            message: "You have successfully logged in",
+            seller,
+            token
+        });
+    }
+    catch (error) {
+    }
+}
+exports.loginSeller = loginSeller;

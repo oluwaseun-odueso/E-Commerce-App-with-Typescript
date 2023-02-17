@@ -69,18 +69,18 @@ export async function loginUser (req: Request, res: Response) {
         };
 
         const collectedUserPassword = await retrieveHashedPassword(email)
-            if (await confirmRetrievedPassword(password, collectedUserPassword) !== true) {
-                res.status(400).send({ success: false, message: "You have entered an incorrect password"})
-                return;
-            };
+        if (await confirmRetrievedPassword(password, collectedUserPassword) !== true) {
+            res.status(400).send({ success: false, message: "You have entered an incorrect password"})
+            return;
+        };
 
-            const token = await generateUserToken(user);
-            res.status(200).send({
-                success: true,
-                message: "You have successfully logged in",
-                user, 
-                token
-            })
+        const token = await generateUserToken(user);
+        res.status(200).send({
+            success: true,
+            message: "You have successfully logged in",
+            user, 
+            token
+        })
     } catch (error: any) {
         return res.status(500).json({
             success: false,

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSellerByEmail = exports.checkPhoneNumber = exports.checkEmail = exports.createSeller = void 0;
+exports.retrieveHashedPassword = exports.getSellerByEmail = exports.checkPhoneNumber = exports.checkEmail = exports.createSeller = void 0;
 const seller_1 = require("../models/seller");
 async function createSeller(sellerDetails) {
     try {
@@ -53,3 +53,16 @@ async function getSellerByEmail(email) {
     }
 }
 exports.getSellerByEmail = getSellerByEmail;
+async function retrieveHashedPassword(email) {
+    try {
+        const sellerPassword = await seller_1.Seller.findOne({
+            attributes: ["hashed_password"],
+            where: { email }
+        });
+        return JSON.parse(JSON.stringify(sellerPassword)).hashed_password;
+    }
+    catch (error) {
+        throw new Error(`Error retrieving seller password: ${error}`);
+    }
+}
+exports.retrieveHashedPassword = retrieveHashedPassword;

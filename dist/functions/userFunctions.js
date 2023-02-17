@@ -102,7 +102,7 @@ async function confirmRetrievedPassword(password, hashedPassword) {
         return confirmPassword;
     }
     catch (error) {
-        throw new Error(`Error comfirming user password: ${error}`);
+        throw new Error(`Error comfirming password: ${error}`);
     }
     ;
 }

@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
-import { hashPassword } from "../functions/userFunctions";
+import { confirmRetrievedPassword, hashPassword } from "../functions/userFunctions";
 import { 
     SellerType, 
     createSeller,
     checkEmail, 
     checkPhoneNumber,
-    getSellerByEmail
+    getSellerByEmail,
+    retrieveHashedPassword
 } from "../functions/sellerFunctions";
+import {generateSellerToken} from '../auth/jwtAuth'
 
 export async function signUpSeller (req: Request, res: Response) {
     try {
@@ -41,5 +43,40 @@ export async function signUpSeller (req: Request, res: Response) {
             message: 'Error creating seller',
             error: error.message
         });
+    }
+}
+
+export async function loginSeller(req: Request, res: Response) {
+    try {
+        if (!req.body.email || !req.body.password) {
+            res.status(400).json({ 
+                success: false, 
+                message: "Please enter email and password"
+            });
+            return;
+        }
+        const {email, password} = req.body;
+
+        const seller = await getSellerByEmail(email);
+        if (!seller) {
+            res.status(400).send({ success: false, message: "Email does not exist"})
+            return;
+        };
+
+        const collectedUserPassword = await retrieveHashedPassword(email)
+        if (await confirmRetrievedPassword(password, collectedUserPassword) !== true) {
+            res.status(400).send({ success: false, message: "You have entered an incorrect password"})
+            return;
+        };
+        
+        const token = await generateSellerToken(seller);
+        res.status(200).send({
+            success: true,
+            message: "You have successfully logged in",
+            seller, 
+            token
+        })
+    } catch (error) {
+        
     }
 }

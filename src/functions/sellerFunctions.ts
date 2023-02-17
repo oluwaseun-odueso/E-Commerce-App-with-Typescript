@@ -53,3 +53,15 @@ export async function getSellerByEmail(email: string): Promise<SellerType> {
         throw new Error(`Error getting user by email: ${error}`)
     }
 }
+
+export async function retrieveHashedPassword(email: string): Promise<string> {
+    try {
+        const sellerPassword = await Seller.findOne({
+            attributes: ["hashed_password"],
+            where: {email}
+        });
+        return JSON.parse(JSON.stringify(sellerPassword)).hashed_password;
+    } catch (error) {
+        throw new Error(`Error retrieving seller password: ${error}`)
+    }
+}
