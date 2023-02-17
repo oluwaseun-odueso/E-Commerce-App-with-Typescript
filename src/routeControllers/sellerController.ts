@@ -10,8 +10,6 @@ import {
 
 export async function signUpSeller (req: Request, res: Response) {
     try {
-        console.log(req.body.store_id)
-        console.log(req.body.image_key)
         if (!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.phone_number || !req.body.address || !req.body.password) {
             res.status(400).json({ 
                 success: false, 
@@ -32,7 +30,6 @@ export async function signUpSeller (req: Request, res: Response) {
         }
 
         const hashed_password = await hashPassword(password);
-        console.log(hashed_password)
         const sellerDetails: SellerType = {first_name, last_name, email, store_id, phone_number, address, image_key, hashed_password};
         await createSeller(sellerDetails);
         const seller = await getSellerByEmail(email)

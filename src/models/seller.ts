@@ -31,7 +31,7 @@ Seller.init({
     image_key: {
       type: DataTypes.STRING,
     },
-    password: {
+    hashed_password: {
       type: DataTypes.STRING,
       allowNull: false
     }

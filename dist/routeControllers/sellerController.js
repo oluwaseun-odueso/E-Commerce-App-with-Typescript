@@ -5,8 +5,6 @@ const userFunctions_1 = require("../functions/userFunctions");
 const sellerFunctions_1 = require("../functions/sellerFunctions");
 async function signUpSeller(req, res) {
     try {
-        console.log(req.body.store_id);
-        console.log(req.body.image_key);
         if (!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.phone_number || !req.body.address || !req.body.password) {
             res.status(400).json({
                 success: false,
@@ -24,7 +22,6 @@ async function signUpSeller(req, res) {
             return;
         }
         const hashed_password = await (0, userFunctions_1.hashPassword)(password);
-        console.log(hashed_password);
         const sellerDetails = { first_name, last_name, email, store_id, phone_number, address, image_key, hashed_password };
         await (0, sellerFunctions_1.createSeller)(sellerDetails);
         const seller = await (0, sellerFunctions_1.getSellerByEmail)(email);

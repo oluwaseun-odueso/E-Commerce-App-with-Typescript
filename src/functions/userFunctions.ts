@@ -9,7 +9,7 @@ export type UserType = {
     address: string,
     state: string,
     postal_code?: number,
-    hashed_password?: string,
+    hashed_password: string,
     image_key?: string
 }
 

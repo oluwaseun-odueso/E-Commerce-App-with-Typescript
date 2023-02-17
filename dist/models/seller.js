@@ -37,7 +37,7 @@ Seller.init({
     image_key: {
         type: sequelize_1.DataTypes.STRING,
     },
-    password: {
+    hashed_password: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     }

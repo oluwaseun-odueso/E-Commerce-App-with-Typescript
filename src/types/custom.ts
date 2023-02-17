@@ -1,13 +1,14 @@
 export type User = {
     id: number,
-    first_name: string,
-    last_name: string,
+    first_name: string, 
+    last_name?: string,
     email: string,
     phone_number: string,
-    hashed_password: string,
     address: string,
     state: string,
-    postal_code: number
+    postal_code?: number,
+    hashed_password: string,
+    image_key?: string
 };
 
 export type Seller = {
@@ -15,10 +16,11 @@ export type Seller = {
     first_name: string,
     last_name: string,
     email: string,
-    password: string, 
-    store_id: number, 
+    store_id?: number, 
     phone_number: string,
-    address: string
+    address: string,
+    image_key?: string,
+    hashed_password: string, 
 };
 
 export type Store = {
