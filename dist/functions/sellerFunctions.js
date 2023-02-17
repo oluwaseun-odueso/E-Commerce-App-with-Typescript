@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.retrieveHashedPassword = exports.getSellerByEmail = exports.checkPhoneNumber = exports.checkEmail = exports.createSeller = void 0;
+exports.updateSellerAccountDetails = exports.retrieveHashedPassword = exports.getSellerById = exports.getSellerByEmail = exports.checkPhoneNumber = exports.checkEmail = exports.createSeller = void 0;
 const seller_1 = require("../models/seller");
 async function createSeller(sellerDetails) {
     try {
@@ -53,6 +53,19 @@ async function getSellerByEmail(email) {
     }
 }
 exports.getSellerByEmail = getSellerByEmail;
+async function getSellerById(id) {
+    try {
+        const seller = await seller_1.Seller.findOne({
+            attributes: { exclude: ['hashed_password', 'image_key', 'createdAt', 'updatedAt'] },
+            where: { id }
+        });
+        return JSON.parse(JSON.stringify(seller));
+    }
+    catch (error) {
+        throw new Error(`Error getting user by id: ${error}`);
+    }
+}
+exports.getSellerById = getSellerById;
 async function retrieveHashedPassword(email) {
     try {
         const sellerPassword = await seller_1.Seller.findOne({
@@ -66,3 +79,16 @@ async function retrieveHashedPassword(email) {
     }
 }
 exports.retrieveHashedPassword = retrieveHashedPassword;
+async function updateSellerAccountDetails(id, first_name, last_name, email, phone_number, address) {
+    try {
+        const updated = await seller_1.Seller.update({ first_name, last_name, email, phone_number, address }, {
+            where: { id }
+        });
+        return updated;
+    }
+    catch (error) {
+        throw new Error(`Error updating seller details: ${error}`);
+    }
+}
+exports.updateSellerAccountDetails = updateSellerAccountDetails;
+;

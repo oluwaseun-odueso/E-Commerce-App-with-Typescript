@@ -13,7 +13,7 @@ import {
 router.post('/signup', signUpUser)
 router.post('/login', loginUser)
 router.put('/update_account', verifyUserToken, updateUserAccount)
-router.get('/get_user_account', verifyUserToken, getUserAccount)
-router.delete('/delete_user_account', verifyUserToken, deleteUserAccount)
+router.get('/get_account', verifyUserToken, getUserAccount)
+router.delete('/delete_account', verifyUserToken, deleteUserAccount)
 
 module.exports = router

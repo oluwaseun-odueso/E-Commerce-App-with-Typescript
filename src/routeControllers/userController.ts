@@ -121,7 +121,7 @@ export async function updateUserAccount (req: Request, res: Response) {
         const updated = await getUserById(req.user.id)
         res.status(200).send({
             success: true,
-            message: 'User account details updated', 
+            message: 'Dear Buyer, your account has been updated', 
             updated
         });
     } catch (error: any) {

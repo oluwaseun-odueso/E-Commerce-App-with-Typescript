@@ -111,7 +111,7 @@ async function updateUserAccount(req, res) {
         const updated = await (0, userFunctions_1.getUserById)(req.user.id);
         res.status(200).send({
             success: true,
-            message: 'User account details updated',
+            message: 'Dear Buyer, your account has been updated',
             updated
         });
     }

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginSeller = exports.signUpSeller = void 0;
+exports.updateSellerAccount = exports.loginSeller = exports.signUpSeller = void 0;
 const userFunctions_1 = require("../functions/userFunctions");
 const sellerFunctions_1 = require("../functions/sellerFunctions");
 const jwtAuth_1 = require("../auth/jwtAuth");
@@ -68,6 +68,78 @@ async function loginSeller(req, res) {
         });
     }
     catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Error logging in',
+            error: error.message
+        });
     }
+    ;
 }
 exports.loginSeller = loginSeller;
+;
+async function updateSellerAccount(req, res) {
+    try {
+        if (!req.body.first_name || !req.body.last_name || !req.body.email || !req.body.phone_number || !req.body.address) {
+            res.status(400).json({
+                success: false,
+                message: "Please enter required fields"
+            });
+            return;
+        }
+        ;
+        const { first_name, last_name, email, phone_number, address } = req.body;
+        const seller = await (0, sellerFunctions_1.getSellerById)(req.seller.id);
+        if (await (0, sellerFunctions_1.checkEmail)(email) && !(0, userFunctions_1.checkIfEntriesMatch)(seller.email, email)) {
+            res.status(400).send({
+                success: false,
+                message: "Email already exists"
+            });
+            return;
+        }
+        ;
+        if (await (0, sellerFunctions_1.checkPhoneNumber)(phone_number) && !(0, userFunctions_1.checkIfEntriesMatch)(seller.phone_number, phone_number)) {
+            res.status(400).send({
+                success: false,
+                message: "Phone number already exists"
+            });
+            return;
+        }
+        ;
+        await (0, sellerFunctions_1.updateSellerAccountDetails)(req.seller.id, first_name, last_name, email, phone_number, address);
+        const updated = await (0, sellerFunctions_1.getSellerById)(req.seller.id);
+        res.status(200).send({
+            success: true,
+            message: 'Dear Seller, your account has been updated',
+            updated
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Error updating seller account',
+            error: error.message
+        });
+    }
+}
+exports.updateSellerAccount = updateSellerAccount;
+// const updateSellerAccount = async (req, res) => {
+//     if (req.body.first_name && req.body.last_name && req.body.email && req.body.store_id && req.body.address && req.body.phone_number) {
+//         const {first_name, last_name, email, phone_number, address, store_id} = req.body
+//         const seller = await getSellerById(req.seller.id)
+//         try {
+//             if ( await checkEmail (email) && ! checkIfEntriesMatch(seller.email, email)) {
+//                 res.status(400).send({message: "Email already exists"})
+//                 return
+//             }
+//             if ( await checkPhoneNumber (phone_number) && ! checkIfEntriesMatch(seller.phone_number, phone_number)) {
+//                 res.status(400).send({message: "Phone number already exists"})
+//                 return
+//             }
+//             await updateSellerAccountDetails(req.seller.id, first_name, last_name, email, store_id, phone_number, address)
+//             const updated = await getSellerById(req.seller.id)
+//             res.status(200).send({message: 'Account details updated', updated})
+//         } catch (error) { res.status(400).send({message: error.message}) }
+//     }
+//     else res.status(400).send({ errno: "103", message: "Please enter all fields" })
+// }
