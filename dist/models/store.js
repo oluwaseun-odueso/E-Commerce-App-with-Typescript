@@ -15,12 +15,12 @@ Store.init({
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
-    address: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false
-    },
     seller_id: {
         type: sequelize_1.DataTypes.INTEGER,
+        allowNull: false
+    },
+    address: {
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
     image_key: {

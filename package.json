@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon dist/app.js",
+    "start": "nodemon dist/functions/storeFunctions.js",
     "dev": "nodemon src/app.ts",
     "build": "tsc -p ."
   },

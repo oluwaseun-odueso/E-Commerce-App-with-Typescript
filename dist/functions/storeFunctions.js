@@ -1,10 +1,6 @@
 "use strict";
-// const {DataTypes} = require('sequelize')
-// const storeModel = require('../models/store')
-// const sequelize = require('../config/database');
-// const Store = storeModel(sequelize, DataTypes)
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getStoreImageKey = exports.saveStoreImageKey = exports.deleteAStore = exports.getStoreById = exports.checkIfSellerHasStore = exports.getStoreIdByStoreName = exports.checkStoreName = exports.createAStore = void 0;
+exports.saveStoreImageKey = exports.deleteAStore = exports.checkIfEntriesMatch = exports.updateStoreDetails = exports.getStoreById = exports.checkIfSellerHasStore = exports.getStoreIdByStoreName = exports.checkStoreName = exports.createAStore = void 0;
 const store_1 = require("../models/store");
 async function createAStore(seller_id, name, address) {
     try {
@@ -15,11 +11,13 @@ async function createAStore(seller_id, name, address) {
     catch (error) {
         throw new Error(`Error creating store: ${error}`);
     }
+    ;
 }
 exports.createAStore = createAStore;
-createAStore(1, "Watches", "Adebayo Street")
-    .then(i => console.log(i))
-    .catch(error => console.log(error));
+;
+// createAStore(1, "Watches", "Adebayo Street")
+//     .then(i => console.log(i))
+//     .catch(error => console.log(error))
 async function checkStoreName(name) {
     try {
         const storeNameCheck = await store_1.Store.findOne({
@@ -32,12 +30,15 @@ async function checkStoreName(name) {
     }
 }
 exports.checkStoreName = checkStoreName;
+// checkStoreName('Watches')
+//     .then(i => console.log(i))
+//     .catch(error => console.log(error))
 async function getStoreIdByStoreName(name) {
     try {
         const storeId = await store_1.Store.findOne({
             where: { name }
         });
-        return JSON.parse(JSON.stringify(storeId));
+        return JSON.parse(JSON.stringify(storeId)).id;
     }
     catch (error) {
         throw new Error(`Error getting store id`);
@@ -45,29 +46,40 @@ async function getStoreIdByStoreName(name) {
 }
 exports.getStoreIdByStoreName = getStoreIdByStoreName;
 ;
+// getStoreIdByStoreName("Watches")
+//     .then(i => console.log(i))
+//     .catch(error => console.log(error))
 async function checkIfSellerHasStore(seller_id) {
     try {
         const store = await store_1.Store.findOne({
             where: { seller_id }
         });
-        return store;
+        return JSON.parse(JSON.stringify(store));
     }
     catch (error) {
         throw new Error(`Error checking if seller already has a store.`);
     }
 }
 exports.checkIfSellerHasStore = checkIfSellerHasStore;
+// checkIfSellerHasStore(1)
+//     .then(i => console.log(i))
+//     .catch(error => console.log(error))
 async function getStoreIdBySellerId(seller_id) {
     try {
         const storeId = await store_1.Store.findOne({
             where: { seller_id }
         });
-        return storeId.dataValues.id;
+        return JSON.parse(JSON.stringify(storeId)).id;
     }
     catch (error) {
-        return error;
+        throw new Error(`Error getting store id with seller id`);
     }
+    ;
 }
+;
+// getStoreIdBySellerId(1)
+//     .then(i => console.log(i))
+//     .catch(error => console.log(error))
 async function getStoreById(id, seller_id) {
     try {
         const store = await store_1.Store.findOne({
@@ -78,22 +90,33 @@ async function getStoreById(id, seller_id) {
     catch (error) {
         throw new Error(`Error getting store by id`);
     }
+    ;
 }
 exports.getStoreById = getStoreById;
+;
+// getStoreById(1, 1)
+//     .then(i => console.log(i))
+//     .catch(error => console.log(error))
 async function updateStoreDetails(id, seller_id, name, address) {
     try {
         const updatedStore = await store_1.Store.update({ name, address }, {
             where: { id, seller_id }
         });
+        // return JSON.parse(JSON.stringify(updatedStore))
         return updatedStore;
     }
     catch (error) {
-        return error;
+        throw new Error(`Error updating store details`);
     }
 }
+exports.updateStoreDetails = updateStoreDetails;
+// updateStoreDetails(1, 1, "Watches", "Ademola Street")
+//     .then(i => console.log(i))
+//     .catch(error => console.log(error))
 function checkIfEntriesMatch(initialValue, newValue) {
     return initialValue === newValue;
 }
+exports.checkIfEntriesMatch = checkIfEntriesMatch;
 async function deleteAStore(id, seller_id) {
     try {
         const removeStore = await store_1.Store.destroy({
@@ -118,16 +141,14 @@ async function saveStoreImageKey(id, image_key) {
     }
 }
 exports.saveStoreImageKey = saveStoreImageKey;
-async function getStoreImageKey(id) {
-    try {
-        const key = await store_1.Store.findOne({
-            attributes: ['image_key'],
-            where: { id }
-        });
-        return key.dataValues.image_key;
-    }
-    catch (error) {
-        return error;
-    }
-}
-exports.getStoreImageKey = getStoreImageKey;
+// export async function getStoreImageKey (id: number) {
+//     try {
+//         const key = await Store.findOne({
+//             attributes: ['image_key'],
+//             where: { id }
+//         })
+//         return key.dataValues.image_key
+//     } catch (error) {
+//         return error
+//     }
+// }

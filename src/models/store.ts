@@ -9,12 +9,12 @@ Store.init({
     type: DataTypes.STRING,
     allowNull: false
   },
-  address: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
   seller_id: {
     type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  address: {
+    type: DataTypes.STRING,
     allowNull: false
   },
   image_key: {
