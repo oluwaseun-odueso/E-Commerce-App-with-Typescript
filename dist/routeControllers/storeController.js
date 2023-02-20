@@ -44,7 +44,7 @@ async function getAStore(req, res) {
             res.status(400).send({ message: "Store does not exist" });
             return;
         }
-        res.status(200).send({ store });
+        res.status(200).send({ success: true, store });
     }
     catch (error) {
         res.status(400).send({
@@ -55,13 +55,3 @@ async function getAStore(req, res) {
     }
 }
 exports.getAStore = getAStore;
-// const getStore = async(req, res) => {
-//     try {
-// const store = await getStoreById(req.params.id, req.seller.id)
-// if ( ! store) {
-//     res.status(400).send({ message: "Store does not exist" })
-//     return
-// }
-// res.status(200).send({store})
-//     } catch (error) { res.status(400).send({message: error.message}) }
-// }
