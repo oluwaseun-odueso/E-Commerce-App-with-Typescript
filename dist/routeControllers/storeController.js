@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateStore = exports.getAStore = exports.createStore = void 0;
+exports.deleteStore = exports.updateStore = exports.getAStore = exports.createStore = void 0;
 const storeFunctions_1 = require("../functions/storeFunctions");
 async function createStore(req, res) {
     try {
@@ -96,4 +96,30 @@ async function updateStore(req, res) {
     ;
 }
 exports.updateStore = updateStore;
+;
+async function deleteStore(req, res) {
+    try {
+        const store = await (0, storeFunctions_1.deleteAStore)(req.seller.id);
+        if (!store) {
+            res.status(400).send({
+                success: false,
+                message: "You do not have a store"
+            });
+            return;
+        }
+        ;
+        res.status(200).send({
+            success: true,
+            message: "Store closed"
+        });
+    }
+    catch (error) {
+        res.send({
+            success: false,
+            message: error.message
+        });
+    }
+    ;
+}
+exports.deleteStore = deleteStore;
 ;

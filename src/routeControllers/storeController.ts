@@ -4,6 +4,7 @@ import {
     checkIfSellerHasStore,
     checkStoreName,
     createAStore,
+    deleteAStore,
     getStoreBySellerId,
     updateStoreDetails
 } from '../functions/storeFunctions'
@@ -86,6 +87,28 @@ export async function updateStore(req: Request, res: Response) {
             success: false,
             message: 'Error updating store details',
             error: error.message
+        });
+    };
+};
+
+export async function deleteStore(req: Request, res: Response) {
+    try {
+        const store = await deleteAStore(req.seller.id)
+        if ( ! store) {
+            res.status(400).send({
+                success: false, 
+                message: "You do not have a store"
+            })
+            return;
+        };
+        res.status(200).send({
+            success: true, 
+            message: "Store closed"
+        });
+    } catch (error: any) { 
+        res.send({
+            success: false, 
+            message : error.message
         });
     };
 };

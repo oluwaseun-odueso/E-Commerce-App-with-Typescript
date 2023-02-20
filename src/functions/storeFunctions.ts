@@ -56,10 +56,6 @@ export async function getStoreBySellerId(seller_id: number): Promise<StoreType> 
     };
 };
 
-// getStoreBySellerId(1)
-//     .then(i => console.log(i))
-//     .catch(error => console.log(error))
-
 export async function getStoreById(id: number, seller_id: number): Promise<StoreType> {
     try {
         const store = await Store.findOne({
@@ -87,10 +83,10 @@ export function checkIfEntriesMatch (initialValue: string, newValue: string): bo
     return initialValue === newValue
 };
 
-export async function deleteAStore(id: number, seller_id: number) {
+export async function deleteAStore(seller_id: number) {
     try {
         const removeStore = await Store.destroy({
-            where: {id, seller_id}
+            where: {seller_id}
         })
         return removeStore
     } catch (error) {

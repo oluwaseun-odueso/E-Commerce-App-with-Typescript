@@ -10,4 +10,5 @@ const storeController_1 = require("../routeControllers/storeController");
 router.post('/create', jwtAuth_1.verifySellerToken, storeController_1.createStore);
 router.get('/getStore', jwtAuth_1.verifySellerToken, storeController_1.getAStore);
 router.put('/updateStore', jwtAuth_1.verifySellerToken, storeController_1.updateStore);
+router.delete('/deleteStore', jwtAuth_1.verifySellerToken, storeController_1.deleteStore);
 module.exports = router;

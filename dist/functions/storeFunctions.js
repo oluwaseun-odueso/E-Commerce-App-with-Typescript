@@ -71,9 +71,6 @@ async function getStoreBySellerId(seller_id) {
 }
 exports.getStoreBySellerId = getStoreBySellerId;
 ;
-// getStoreBySellerId(1)
-//     .then(i => console.log(i))
-//     .catch(error => console.log(error))
 async function getStoreById(id, seller_id) {
     try {
         const store = await store_1.Store.findOne({
@@ -108,10 +105,10 @@ function checkIfEntriesMatch(initialValue, newValue) {
 }
 exports.checkIfEntriesMatch = checkIfEntriesMatch;
 ;
-async function deleteAStore(id, seller_id) {
+async function deleteAStore(seller_id) {
     try {
         const removeStore = await store_1.Store.destroy({
-            where: { id, seller_id }
+            where: { seller_id }
         });
         return removeStore;
     }

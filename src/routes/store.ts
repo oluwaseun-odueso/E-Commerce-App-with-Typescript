@@ -4,6 +4,7 @@ const router: Router  = express.Router()
 
 import {
     createStore, 
+    deleteStore, 
     getAStore, 
     updateStore
 } from "../routeControllers/storeController";
@@ -11,5 +12,6 @@ import {
 router.post('/create', verifySellerToken, createStore);
 router.get('/getStore', verifySellerToken, getAStore);
 router.put('/updateStore', verifySellerToken, updateStore)
+router.delete('/deleteStore', verifySellerToken, deleteStore)
 
 module.exports = router;
