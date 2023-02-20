@@ -16,4 +16,4 @@ router.put('/update_account', verifyUserToken, updateUserAccount)
 router.get('/get_account', verifyUserToken, getUserAccount)
 router.delete('/delete_account', verifyUserToken, deleteAccount)
 
-module.exports = router
+module.exports = router;

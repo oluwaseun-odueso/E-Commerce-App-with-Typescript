@@ -17,10 +17,6 @@ export async function createAStore(seller_id: number, name: string, address: str
     };
 };
 
-// createAStore(1, "Watches", "Adebayo Street")
-//     .then(i => console.log(i))
-//     .catch(error => console.log(error))
-
 export async function checkStoreName(name: string): Promise<boolean> {
     try {
         const storeNameCheck = await Store.findOne({
@@ -29,12 +25,8 @@ export async function checkStoreName(name: string): Promise<boolean> {
         return storeNameCheck ? true : false
     } catch (error) {
         throw new Error(`Error checking store name`)
-    }
-}
-
-// checkStoreName('Watches')
-//     .then(i => console.log(i))
-//     .catch(error => console.log(error))
+    };
+};
 
 export async function getStoreIdByStoreName(name: string): Promise<number> {
     try {
@@ -47,10 +39,6 @@ export async function getStoreIdByStoreName(name: string): Promise<number> {
     }
 };
 
-// getStoreIdByStoreName("Watches")
-//     .then(i => console.log(i))
-//     .catch(error => console.log(error))
-
 export async function checkIfSellerHasStore(seller_id: number): Promise<{}> {
     try {
         const store = await Store.findOne({
@@ -59,14 +47,10 @@ export async function checkIfSellerHasStore(seller_id: number): Promise<{}> {
         return JSON.parse(JSON.stringify(store))
     } catch (error) {
         throw new Error(`Error checking if seller already has a store.`)
-    }
-}
+    };
+};
 
-// checkIfSellerHasStore(1)
-//     .then(i => console.log(i))
-//     .catch(error => console.log(error))
-
-async function getStoreIdBySellerId(seller_id: number): Promise<number> {
+export async function getStoreIdBySellerId(seller_id: number): Promise<number> {
     try {
         const storeId = await Store.findOne({
             where: { seller_id }
@@ -76,10 +60,6 @@ async function getStoreIdBySellerId(seller_id: number): Promise<number> {
         throw new Error(`Error getting store id with seller id`)
     };
 };
-
-// getStoreIdBySellerId(1)
-//     .then(i => console.log(i))
-//     .catch(error => console.log(error))
 
 export async function getStoreById(id: number, seller_id: number): Promise<{}> {
     try {
@@ -92,10 +72,6 @@ export async function getStoreById(id: number, seller_id: number): Promise<{}> {
     };
 };
 
-// getStoreById(1, 1)
-//     .then(i => console.log(i))
-//     .catch(error => console.log(error))
-
 export async function updateStoreDetails(id: number, seller_id: number, name: string, address: string) {
     try {
         const updatedStore = await Store.update({name, address}, {
@@ -105,16 +81,12 @@ export async function updateStoreDetails(id: number, seller_id: number, name: st
         return updatedStore
     } catch (error) {
         throw new Error(`Error updating store details`)
-    }
-}
-
-// updateStoreDetails(1, 1, "Watches", "Ademola Street")
-//     .then(i => console.log(i))
-//     .catch(error => console.log(error))
+    };
+};
 
 export function checkIfEntriesMatch (initialValue: string, newValue: string): boolean {
     return initialValue === newValue
-}
+};
 
 export async function deleteAStore(id: number, seller_id: number) {
     try {
@@ -137,15 +109,3 @@ export async function saveStoreImageKey(id: number, image_key: string) {
         return error
     }
 }
-
-// export async function getStoreImageKey (id: number) {
-//     try {
-//         const key = await Store.findOne({
-//             attributes: ['image_key'],
-//             where: { id }
-//         })
-//         return key.dataValues.image_key
-//     } catch (error) {
-//         return error
-//     }
-// }

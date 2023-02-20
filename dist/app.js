@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const userRoutes = require('./routes/user');
 const sellerRoutes = require('./routes/seller');
+const storeRoutes = require('./routes/store');
 require('dotenv').config();
 const port = process.env.PORT || 4000;
 const app = (0, express_1.default)();
@@ -15,5 +16,6 @@ app.get('/', (req, res) => {
 app.use(express_1.default.json());
 app.use('/user', userRoutes);
 app.use('/seller', sellerRoutes);
+app.use('/store', storeRoutes);
 app.listen(port, () => console.log("Server running"));
 module.exports = app;
