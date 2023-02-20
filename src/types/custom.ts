@@ -23,12 +23,12 @@ export type Seller = {
     hashed_password: string, 
 };
 
-export type Store = {
+export type StoreType = {
     id: number,
     name: string,
     address: string,
     seller_id: number,
-    image_key: string
+    image_key?: string
 };
 
 export type Product = {

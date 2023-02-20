@@ -9,4 +9,5 @@ const router = express_1.default.Router();
 const storeController_1 = require("../routeControllers/storeController");
 router.post('/create', jwtAuth_1.verifySellerToken, storeController_1.createStore);
 router.get('/getStore', jwtAuth_1.verifySellerToken, storeController_1.getAStore);
+router.put('/updateStore', jwtAuth_1.verifySellerToken, storeController_1.updateStore);
 module.exports = router;

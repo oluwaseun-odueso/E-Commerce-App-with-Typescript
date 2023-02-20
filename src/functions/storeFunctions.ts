@@ -1,13 +1,7 @@
 import {Store} from '../models/store';
+import {StoreType} from "../types/custom"
 
-export type StoreType = {
-    name: string, 
-    address: string,
-    seller_id: number,
-    image_key: string
-}
-
-export async function createAStore(seller_id: number, name: string, address: string): Promise<{}> {
+export async function createAStore(seller_id: number, name: string, address: string): Promise<StoreType> {
     try {
         const storeDetails = {seller_id, name, address}
         const store = await Store.create(storeDetails)
@@ -39,7 +33,7 @@ export async function getStoreIdByStoreName(name: string): Promise<number> {
     }
 };
 
-export async function checkIfSellerHasStore(seller_id: number): Promise<{}> {
+export async function checkIfSellerHasStore(seller_id: number): Promise<StoreType> {
     try {
         const store = await Store.findOne({
             where: {seller_id}
@@ -50,19 +44,23 @@ export async function checkIfSellerHasStore(seller_id: number): Promise<{}> {
     };
 };
 
-export async function getStoreBySellerId(seller_id: number): Promise<number> {
+export async function getStoreBySellerId(seller_id: number): Promise<StoreType> {
     try {
-        const storeId = await Store.findOne({
+        const store = await Store.findOne({
             attributes: { exclude: ['createdAt', 'updatedAt']},
             where: { seller_id }
         })
-        return JSON.parse(JSON.stringify(storeId))
+        return JSON.parse(JSON.stringify(store))
     } catch (error) {
         throw new Error(`Error getting store id with seller id`)
     };
 };
 
-export async function getStoreById(id: number, seller_id: number): Promise<{}> {
+// getStoreBySellerId(1)
+//     .then(i => console.log(i))
+//     .catch(error => console.log(error))
+
+export async function getStoreById(id: number, seller_id: number): Promise<StoreType> {
     try {
         const store = await Store.findOne({
             attributes: { exclude: ['createdAt', 'updatedAt']},
@@ -74,10 +72,10 @@ export async function getStoreById(id: number, seller_id: number): Promise<{}> {
     };
 };
 
-export async function updateStoreDetails(id: number, seller_id: number, name: string, address: string) {
+export async function updateStoreDetails(seller_id: number, name: string, address: string) {
     try {
         const updatedStore = await Store.update({name, address}, {
-            where: { id, seller_id }
+            where: { seller_id }
         });
         return updatedStore
     } catch (error) {
@@ -96,7 +94,7 @@ export async function deleteAStore(id: number, seller_id: number) {
         })
         return removeStore
     } catch (error) {
-        return error
+        throw new Error(`Error deleting store details`)
     }
 }
 

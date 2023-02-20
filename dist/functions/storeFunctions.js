@@ -58,11 +58,11 @@ exports.checkIfSellerHasStore = checkIfSellerHasStore;
 ;
 async function getStoreBySellerId(seller_id) {
     try {
-        const storeId = await store_1.Store.findOne({
+        const store = await store_1.Store.findOne({
             attributes: { exclude: ['createdAt', 'updatedAt'] },
             where: { seller_id }
         });
-        return JSON.parse(JSON.stringify(storeId));
+        return JSON.parse(JSON.stringify(store));
     }
     catch (error) {
         throw new Error(`Error getting store id with seller id`);
@@ -71,6 +71,9 @@ async function getStoreBySellerId(seller_id) {
 }
 exports.getStoreBySellerId = getStoreBySellerId;
 ;
+// getStoreBySellerId(1)
+//     .then(i => console.log(i))
+//     .catch(error => console.log(error))
 async function getStoreById(id, seller_id) {
     try {
         const store = await store_1.Store.findOne({
@@ -86,10 +89,10 @@ async function getStoreById(id, seller_id) {
 }
 exports.getStoreById = getStoreById;
 ;
-async function updateStoreDetails(id, seller_id, name, address) {
+async function updateStoreDetails(seller_id, name, address) {
     try {
         const updatedStore = await store_1.Store.update({ name, address }, {
-            where: { id, seller_id }
+            where: { seller_id }
         });
         return updatedStore;
     }
@@ -113,7 +116,7 @@ async function deleteAStore(id, seller_id) {
         return removeStore;
     }
     catch (error) {
-        return error;
+        throw new Error(`Error deleting store details`);
     }
 }
 exports.deleteAStore = deleteAStore;

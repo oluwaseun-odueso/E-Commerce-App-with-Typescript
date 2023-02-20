@@ -30,7 +30,7 @@ async function signUpUser(req, res) {
     catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Error creating user',
+            message: 'Error creating user details',
             error: error.message
         });
     }

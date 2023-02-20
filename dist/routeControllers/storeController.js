@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAStore = exports.createStore = void 0;
+exports.updateStore = exports.getAStore = exports.createStore = void 0;
 const storeFunctions_1 = require("../functions/storeFunctions");
 async function createStore(req, res) {
     try {
@@ -53,5 +53,47 @@ async function getAStore(req, res) {
             error: error.message
         });
     }
+    ;
 }
 exports.getAStore = getAStore;
+;
+async function updateStore(req, res) {
+    try {
+        if (!req.body.name || !req.body.address) {
+            res.status(400).json({
+                success: false,
+                message: "Please enter all required fields"
+            });
+            return;
+        }
+        ;
+        const { name, address } = req.body;
+        const store = await (0, storeFunctions_1.getStoreBySellerId)(req.seller.id);
+        if (!store) {
+            res.status(400).send({
+                success: false,
+                message: "Store does not exist"
+            });
+            return;
+        }
+        ;
+        if (await (0, storeFunctions_1.checkStoreName)(name) && !(0, storeFunctions_1.checkIfEntriesMatch)(store.name, name)) {
+            res.status(400).send({ message: "A store with this name already exists" });
+            return;
+        }
+        ;
+        await (0, storeFunctions_1.updateStoreDetails)(req.seller.id, name, address);
+        const updated = await (0, storeFunctions_1.getStoreBySellerId)(req.seller.id);
+        res.status(200).send({ message: 'Your store details has been updated', updated });
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error updating store details',
+            error: error.message
+        });
+    }
+    ;
+}
+exports.updateStore = updateStore;
+;

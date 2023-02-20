@@ -3,10 +3,13 @@ import { verifySellerToken } from '../auth/jwtAuth';
 const router: Router  = express.Router()
 
 import {
-    createStore, getAStore
+    createStore, 
+    getAStore, 
+    updateStore
 } from "../routeControllers/storeController";
 
 router.post('/create', verifySellerToken, createStore);
-router.get('/getStore', verifySellerToken, getAStore)
+router.get('/getStore', verifySellerToken, getAStore);
+router.put('/updateStore', verifySellerToken, updateStore)
 
 module.exports = router;

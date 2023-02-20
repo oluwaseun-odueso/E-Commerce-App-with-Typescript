@@ -45,7 +45,7 @@ export async function signUpUser (req: Request, res: Response) {
         } catch (error: any) {
         res.status(500).json({
             success: false,
-            message: 'Error creating user',
+            message: 'Error creating user details',
             error: error.message
         });
     };
