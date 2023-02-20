@@ -1,4 +1,4 @@
-import {Request, Response, NextFunction} from 'express'
+import {Request, Response} from 'express'
 import { generateUserToken } from '../auth/jwtAuth';
 import {
     UserType,
@@ -43,7 +43,7 @@ export async function signUpUser (req: Request, res: Response) {
         res.status(201).send({ success: true, message : "Your account has been created", user})   
 
         } catch (error: any) {
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
             message: 'Error creating user',
             error: error.message
@@ -82,7 +82,7 @@ export async function loginUser (req: Request, res: Response) {
             token
         })
     } catch (error: any) {
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
             message: 'Error logging in',
             error: error.message
@@ -125,7 +125,7 @@ export async function updateUserAccount (req: Request, res: Response) {
             updated
         });
     } catch (error: any) {
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
             message: 'Error updating user account',
             error: error.message
@@ -148,7 +148,7 @@ export async function getUserAccount (req: Request, res: Response) {
             user
         })
     } catch (error: any) {
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
             message: 'Error getting account details',
             error: error.message
@@ -171,7 +171,7 @@ export async function deleteAccount (req: Request, res: Response) {
             message: "Account does not exist"
         })
     } catch (error: any) {
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
             message: 'Could not delete your account',
             error: error.message

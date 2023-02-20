@@ -99,3 +99,5 @@ export async function deleteSellerAccount(id: number): Promise<number> {
         throw new Error(`Error deleting seller account: ${error}`)
     };
 };
+
+export function uploadFile(file) {}

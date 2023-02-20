@@ -28,7 +28,7 @@ async function signUpUser(req, res) {
         res.status(201).send({ success: true, message: "Your account has been created", user });
     }
     catch (error) {
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
             message: 'Error creating user',
             error: error.message
@@ -69,7 +69,7 @@ async function loginUser(req, res) {
         });
     }
     catch (error) {
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
             message: 'Error logging in',
             error: error.message
@@ -116,7 +116,7 @@ async function updateUserAccount(req, res) {
         });
     }
     catch (error) {
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
             message: 'Error updating user account',
             error: error.message
@@ -143,7 +143,7 @@ async function getUserAccount(req, res) {
         });
     }
     catch (error) {
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
             message: 'Error getting account details',
             error: error.message
@@ -169,7 +169,7 @@ async function deleteAccount(req, res) {
         });
     }
     catch (error) {
-        return res.status(500).json({
+        res.status(500).json({
             success: false,
             message: 'Could not delete your account',
             error: error.message

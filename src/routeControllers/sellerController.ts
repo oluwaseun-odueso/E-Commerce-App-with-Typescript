@@ -19,7 +19,6 @@ import {
 } from "../functions/sellerFunctions";
 
 import {generateSellerToken} from '../auth/jwtAuth'
-import { type } from "os";
 
 export async function signUpSeller (req: Request, res: Response) {
     try {

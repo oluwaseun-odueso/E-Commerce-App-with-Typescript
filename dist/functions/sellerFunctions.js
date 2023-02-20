@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteSellerAccount = exports.updateSellerAccountDetails = exports.retrieveHashedPassword = exports.getSellerById = exports.getSellerByEmail = exports.checkPhoneNumber = exports.checkEmail = exports.createSeller = void 0;
+exports.uploadFile = exports.deleteSellerAccount = exports.updateSellerAccountDetails = exports.retrieveHashedPassword = exports.getSellerById = exports.getSellerByEmail = exports.checkPhoneNumber = exports.checkEmail = exports.createSeller = void 0;
 const seller_1 = require("../models/seller");
 async function createSeller(sellerDetails) {
     try {
@@ -107,3 +107,5 @@ async function deleteSellerAccount(id) {
 }
 exports.deleteSellerAccount = deleteSellerAccount;
 ;
+function uploadFile(file) { }
+exports.uploadFile = uploadFile;
