@@ -3,7 +3,7 @@ import {
     checkIfSellerHasStore,
     checkStoreName,
     createAStore,
-    getStoreIdByStoreName
+    getStoreBySellerId
 } from '../functions/storeFunctions'
 
 export async function createStore(req: Request, res: Response) {
@@ -18,7 +18,7 @@ export async function createStore(req: Request, res: Response) {
 
         const {name, address} = req.body
         if (await checkIfSellerHasStore(req.seller.id)){
-            res.status(400).send({message: "Cannot create store, you already have a store"})
+            res.status(400).send({message: "You already have a store"})
             return
         };
         if (await checkStoreName(name)){ 
@@ -34,3 +34,30 @@ export async function createStore(req: Request, res: Response) {
             error: error.message}) 
     };
 };
+
+export async function getAStore(req: Request, res: Response) {
+    try {
+        const store = await getStoreBySellerId(req.seller.id)
+        if ( ! store) {
+            res.status(400).send({ message: "Store does not exist" })
+            return
+        }
+        res.status(200).send({store})
+    } catch (error: any) {
+        res.status(400).send({
+            success: false,
+            message: "Error viewing store",
+            error: error.message}) 
+    }
+}
+
+// const getStore = async(req, res) => {
+//     try {
+        // const store = await getStoreById(req.params.id, req.seller.id)
+        // if ( ! store) {
+        //     res.status(400).send({ message: "Store does not exist" })
+        //     return
+        // }
+        // res.status(200).send({store})
+//     } catch (error) { res.status(400).send({message: error.message}) }
+// }

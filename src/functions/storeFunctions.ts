@@ -50,12 +50,13 @@ export async function checkIfSellerHasStore(seller_id: number): Promise<{}> {
     };
 };
 
-export async function getStoreIdBySellerId(seller_id: number): Promise<number> {
+export async function getStoreBySellerId(seller_id: number): Promise<number> {
     try {
         const storeId = await Store.findOne({
+            attributes: { exclude: ['createdAt', 'updatedAt']},
             where: { seller_id }
         })
-        return JSON.parse(JSON.stringify(storeId)).id
+        return JSON.parse(JSON.stringify(storeId))
     } catch (error) {
         throw new Error(`Error getting store id with seller id`)
     };
@@ -64,6 +65,7 @@ export async function getStoreIdBySellerId(seller_id: number): Promise<number> {
 export async function getStoreById(id: number, seller_id: number): Promise<{}> {
     try {
         const store = await Store.findOne({
+            attributes: { exclude: ['createdAt', 'updatedAt']},
             where: { id, seller_id }
         });
         return JSON.parse(JSON.stringify(store))
@@ -77,7 +79,6 @@ export async function updateStoreDetails(id: number, seller_id: number, name: st
         const updatedStore = await Store.update({name, address}, {
             where: { id, seller_id }
         });
-        // return JSON.parse(JSON.stringify(updatedStore))
         return updatedStore
     } catch (error) {
         throw new Error(`Error updating store details`)

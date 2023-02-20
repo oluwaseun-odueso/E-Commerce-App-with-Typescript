@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.saveStoreImageKey = exports.deleteAStore = exports.checkIfEntriesMatch = exports.updateStoreDetails = exports.getStoreById = exports.getStoreIdBySellerId = exports.checkIfSellerHasStore = exports.getStoreIdByStoreName = exports.checkStoreName = exports.createAStore = void 0;
+exports.saveStoreImageKey = exports.deleteAStore = exports.checkIfEntriesMatch = exports.updateStoreDetails = exports.getStoreById = exports.getStoreBySellerId = exports.checkIfSellerHasStore = exports.getStoreIdByStoreName = exports.checkStoreName = exports.createAStore = void 0;
 const store_1 = require("../models/store");
 async function createAStore(seller_id, name, address) {
     try {
@@ -56,23 +56,25 @@ async function checkIfSellerHasStore(seller_id) {
 }
 exports.checkIfSellerHasStore = checkIfSellerHasStore;
 ;
-async function getStoreIdBySellerId(seller_id) {
+async function getStoreBySellerId(seller_id) {
     try {
         const storeId = await store_1.Store.findOne({
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
             where: { seller_id }
         });
-        return JSON.parse(JSON.stringify(storeId)).id;
+        return JSON.parse(JSON.stringify(storeId));
     }
     catch (error) {
         throw new Error(`Error getting store id with seller id`);
     }
     ;
 }
-exports.getStoreIdBySellerId = getStoreIdBySellerId;
+exports.getStoreBySellerId = getStoreBySellerId;
 ;
 async function getStoreById(id, seller_id) {
     try {
         const store = await store_1.Store.findOne({
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
             where: { id, seller_id }
         });
         return JSON.parse(JSON.stringify(store));
@@ -89,7 +91,6 @@ async function updateStoreDetails(id, seller_id, name, address) {
         const updatedStore = await store_1.Store.update({ name, address }, {
             where: { id, seller_id }
         });
-        // return JSON.parse(JSON.stringify(updatedStore))
         return updatedStore;
     }
     catch (error) {
