@@ -28,9 +28,9 @@ export async function hashPassword (password: string): Promise<string> {
         const hash = await bcrypt.hash(password, saltRounds);
         return hash
     } catch (error) {
-        throw new Error(`Error generating password hash: ${error}`);
-    }
-}
+        throw new Error(`Error hashing password: ${error}`);
+    };
+};
 
 export async function checkEmail (email: string): Promise<boolean> {
     try {
@@ -39,7 +39,7 @@ export async function checkEmail (email: string): Promise<boolean> {
         })
         return emailCheck ? true : false
     } catch (error) {
-        throw new Error(`Error checking email: ${error}`)
+        throw new Error(`Error checking if email exists: ${error}`)
     }
 }
 
@@ -50,7 +50,7 @@ export async function checkPhoneNumber(phone_number: string): Promise<boolean> {
         })
         return phoneNumberCheck ? true : false
     } catch (error) {
-        throw new Error(`Error checking phone_number: ${error}`)
+        throw new Error(`Error checking if phone_number exists: ${error}`)
     };
 };
 

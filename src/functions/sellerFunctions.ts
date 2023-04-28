@@ -16,9 +16,9 @@ export async function createSeller(sellerDetails: SellerType): Promise<{}> {
         const seller = await Seller.create(sellerDetails)
         return JSON.parse(JSON.stringify(seller))
     } catch (error) {
-        throw new Error(`Error creating user: ${error}`)
-    }
-}
+        throw new Error(`Error creating seller: ${error}`)
+    };
+};
 
 export async function checkEmail (email: string): Promise<boolean> {
     try {
@@ -27,7 +27,7 @@ export async function checkEmail (email: string): Promise<boolean> {
         })
         return emailCheck ? true : false
     } catch (error) {
-        throw new Error(`Error checking email: ${error}`)
+        throw new Error(`Error checking if email exists: ${error}`)
     };
 };
 
@@ -38,7 +38,7 @@ export async function checkPhoneNumber(phone_number: string): Promise<boolean> {
         })
         return phoneNumberCheck ? true : false
     } catch (error) {
-        throw new Error(`Error checking phone_number: ${error}`)
+        throw new Error(`Error checking if phone_number exists: ${error}`)
     };
 };
 
@@ -50,9 +50,9 @@ export async function getSellerByEmail(email: string): Promise<SellerType> {
         })
         return JSON.parse(JSON.stringify(seller))
     } catch (error) {
-        throw new Error(`Error getting user by email: ${error}`)
+        throw new Error(`Error getting seller by email: ${error}`)
     }
-}
+};
 
 export async function getSellerById(id: number): Promise<SellerType> {
     try {
@@ -62,7 +62,7 @@ export async function getSellerById(id: number): Promise<SellerType> {
         })
         return JSON.parse(JSON.stringify(seller))
     } catch (error) {
-        throw new Error(`Error getting user by id: ${error}`)
+        throw new Error(`Error getting seller by id: ${error}`)
     }
 }
 
@@ -100,4 +100,3 @@ export async function deleteSellerAccount(id: number): Promise<number> {
     };
 };
 
-export function uploadFile(file) {}

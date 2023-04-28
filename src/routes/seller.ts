@@ -6,7 +6,7 @@ import {
     updateSellerAccount,
     getSellerAccount,
     deleteAccount
-} from "../routeControllers/sellerController";
+} from "../controllers/sellerController";
 const router: Router = express.Router();
 
 

@@ -20,7 +20,7 @@ export type Seller = {
     phone_number: string,
     address: string,
     image_key?: string,
-    hashed_password: string, 
+    hashed_password: string
 };
 
 export type StoreType = {

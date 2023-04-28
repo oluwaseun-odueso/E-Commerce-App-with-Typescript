@@ -7,7 +7,7 @@ import {
     deleteStore, 
     getAStore, 
     updateStore
-} from "../routeControllers/storeController";
+} from "../controllers/storeController";
 
 router.post('/create', verifySellerToken, createStore);
 router.get('/getStore', verifySellerToken, getAStore);

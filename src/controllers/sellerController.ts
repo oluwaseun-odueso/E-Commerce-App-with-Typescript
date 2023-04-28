@@ -50,7 +50,7 @@ export async function signUpSeller (req: Request, res: Response) {
     } catch (error: any) {
         return res.status(500).json({
             success: false,
-            message: 'Error creating seller',
+            message: 'Error creating seller account',
             error: error.message
         });
     };
@@ -89,7 +89,7 @@ export async function loginSeller(req: Request, res: Response) {
     } catch (error: any) {
         return res.status(500).json({
             success: false,
-            message: 'Error logging in',
+            message: 'Error logging in seller',
             error: error.message
         });
     };

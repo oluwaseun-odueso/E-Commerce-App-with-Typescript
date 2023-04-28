@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadFile = exports.deleteSellerAccount = exports.updateSellerAccountDetails = exports.retrieveHashedPassword = exports.getSellerById = exports.getSellerByEmail = exports.checkPhoneNumber = exports.checkEmail = exports.createSeller = void 0;
+exports.deleteSellerAccount = exports.updateSellerAccountDetails = exports.retrieveHashedPassword = exports.getSellerById = exports.getSellerByEmail = exports.checkPhoneNumber = exports.checkEmail = exports.createSeller = void 0;
 const seller_1 = require("../models/seller");
 async function createSeller(sellerDetails) {
     try {
@@ -8,10 +8,12 @@ async function createSeller(sellerDetails) {
         return JSON.parse(JSON.stringify(seller));
     }
     catch (error) {
-        throw new Error(`Error creating user: ${error}`);
+        throw new Error(`Error creating seller: ${error}`);
     }
+    ;
 }
 exports.createSeller = createSeller;
+;
 async function checkEmail(email) {
     try {
         const emailCheck = await seller_1.Seller.findOne({
@@ -20,7 +22,7 @@ async function checkEmail(email) {
         return emailCheck ? true : false;
     }
     catch (error) {
-        throw new Error(`Error checking email: ${error}`);
+        throw new Error(`Error checking if email exists: ${error}`);
     }
     ;
 }
@@ -34,7 +36,7 @@ async function checkPhoneNumber(phone_number) {
         return phoneNumberCheck ? true : false;
     }
     catch (error) {
-        throw new Error(`Error checking phone_number: ${error}`);
+        throw new Error(`Error checking if phone_number exists: ${error}`);
     }
     ;
 }
@@ -49,10 +51,11 @@ async function getSellerByEmail(email) {
         return JSON.parse(JSON.stringify(seller));
     }
     catch (error) {
-        throw new Error(`Error getting user by email: ${error}`);
+        throw new Error(`Error getting seller by email: ${error}`);
     }
 }
 exports.getSellerByEmail = getSellerByEmail;
+;
 async function getSellerById(id) {
     try {
         const seller = await seller_1.Seller.findOne({
@@ -62,7 +65,7 @@ async function getSellerById(id) {
         return JSON.parse(JSON.stringify(seller));
     }
     catch (error) {
-        throw new Error(`Error getting user by id: ${error}`);
+        throw new Error(`Error getting seller by id: ${error}`);
     }
 }
 exports.getSellerById = getSellerById;
@@ -107,5 +110,3 @@ async function deleteSellerAccount(id) {
 }
 exports.deleteSellerAccount = deleteSellerAccount;
 ;
-function uploadFile(file) { }
-exports.uploadFile = uploadFile;

@@ -23,10 +23,12 @@ async function hashPassword(password) {
         return hash;
     }
     catch (error) {
-        throw new Error(`Error generating password hash: ${error}`);
+        throw new Error(`Error hashing password: ${error}`);
     }
+    ;
 }
 exports.hashPassword = hashPassword;
+;
 async function checkEmail(email) {
     try {
         const emailCheck = await user_1.User.findOne({
@@ -35,7 +37,7 @@ async function checkEmail(email) {
         return emailCheck ? true : false;
     }
     catch (error) {
-        throw new Error(`Error checking email: ${error}`);
+        throw new Error(`Error checking if email exists: ${error}`);
     }
 }
 exports.checkEmail = checkEmail;
@@ -47,7 +49,7 @@ async function checkPhoneNumber(phone_number) {
         return phoneNumberCheck ? true : false;
     }
     catch (error) {
-        throw new Error(`Error checking phone_number: ${error}`);
+        throw new Error(`Error checking if phone_number exists: ${error}`);
     }
     ;
 }

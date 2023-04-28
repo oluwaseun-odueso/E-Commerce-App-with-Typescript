@@ -8,7 +8,7 @@ import {
     updateUserAccount,
     getUserAccount,
     deleteAccount
-} from "../routeControllers/userController"
+} from "../controllers/userController"
 
 router.post('/signup', signUpUser)
 router.post('/login', loginUser)
