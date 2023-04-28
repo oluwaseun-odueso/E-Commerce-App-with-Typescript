@@ -1,5 +1,17 @@
 "use strict";
 const numbers = [1, 2, 3, 4, 5];
+// Example 3
+const newArray = numbers.map((number) => number + 1);
+console.log(newArray);
+// Example 2
+function isOdd(array, oddArr = []) {
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] % 2 !== 0) {
+            oddArr.push(array[i]);
+        }
+    }
+    return oddArr;
+}
 // Example 2
 const oddArray = numbers.filter((number) => number % 2 !== 0);
 console.log(oddArray);
